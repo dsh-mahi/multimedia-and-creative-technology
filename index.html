@@ -1,0 +1,2920 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- metas -->
+    <meta charset="utf-8" />
+    <meta name="author" content="Chitrakoot Web" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="keywords" content="Deparment Landing Page" />
+    <meta
+      name="description"
+      content="MCT- Multimedia and Creative Technology"
+    />
+
+    <!-- title  -->
+    <title>Deparment of Multimedia and Creative Technology</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/logos/mctfavicon.png" />
+    <link rel="apple-touch-icon" href="img/logos/apple-touch-icon-57x57.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="img/logos/apple-touch-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="img/logos/apple-touch-icon-114x114.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- plugins -->
+    <link rel="stylesheet" href="css/plugins.css" />
+
+    <!-- search css -->
+    <link rel="stylesheet" href="search/search.css" />
+
+    <!-- quform css -->
+    <link rel="stylesheet" href="quform/css/base.css" />
+
+    <!-- core style css -->
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!-- Botpress Chatbot Styles -->
+    <style>
+      #webchat {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        width: 500px;
+        height: 600px;
+        z-index: 1000;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+        background: transparent;
+      }
+
+      #webchat.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      #webchat.minimized {
+        transform: translate(-50%, 100%) scale(0);
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      #webchat .bpWebchat {
+        position: unset;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        background: transparent;
+      }
+
+      #webchat .bpFab {
+        display: none;
+      }
+
+      .chatbot-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .chatbot-backdrop.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .chatbot-minimized-button {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: linear-gradient(45deg, #00F5FF, #00B4FF, #00FFE5, #00FF9D);
+        background-size: 300% 300%;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        animation: gradientAnimation 3s ease infinite, bounceIcon 2s ease infinite;
+      }
+
+      .chatbot-minimized-button:hover {
+        transform: translateX(-50%) scale(1.2);
+        animation: gradientAnimation 0.9s ease infinite;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .chatbot-minimized-button::after {
+        content: attr(data-message);
+        position: absolute;
+        bottom: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 15px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        animation: messagePop 4s ease infinite;
+      }
+
+      .chatbot-minimized-button:hover::after {
+        animation: none;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      @keyframes messagePop {
+        0%, 100% {
+          opacity: 0;
+          visibility: hidden;
+          transform: translateX(-50%) translateY(0);
+        }
+        20%, 80% {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(-50%) translateY(-5px);
+        }
+      }
+
+      @keyframes bounceIcon {
+        0%, 100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+      }
+
+      /* Message Icon Hover Particle Animation */
+      .chatbot-minimized-button::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: transparent;
+        transition: all 0.3s ease;
+        z-index: -1;
+      }
+
+      .chatbot-minimized-button:hover::before {
+        animation: particlePulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes particlePulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(0, 245, 255, 0.4),
+                      0 0 0 0 rgba(0, 180, 255, 0.4),
+                      0 0 0 0 rgba(0, 255, 229, 0.4),
+                      0 0 0 0 rgba(0, 255, 157, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 20px rgba(0, 245, 255, 0),
+                      0 0 0 40px rgba(0, 180, 255, 0),
+                      0 0 0 60px rgba(0, 255, 229, 0),
+                      0 0 0 80px rgba(0, 255, 157, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(0, 245, 255, 0),
+                      0 0 0 0 rgba(0, 180, 255, 0),
+                      0 0 0 0 rgba(0, 255, 229, 0),
+                      0 0 0 0 rgba(0, 255, 157, 0);
+        }
+      }
+
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .chatbot-minimized-button i {
+        font-size: 24px;
+        background: linear-gradient(45deg, #ffffff, #ffffff, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: iconGlow 2s ease-in-out infinite;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .chatbot-minimized-button:hover i {
+        animation: iconBounce 0.6s ease-in-out infinite;
+      }
+
+      @keyframes iconGlow {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.9;
+          transform: scale(1.1);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes iconBounce {
+        0% {
+          transform: scale(1.05);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1.05);
+        }
+      }
+
+      @media (max-width: 600px) {
+        #webchat {
+          width: 90vw;
+          height: 90vh;
+        }
+      }
+
+      .butn {
+        display: inline-block;
+        padding: 14px 25px 14px 55px;
+        position: relative;
+        background-color: #00a5c6;
+        color: #ffffff;
+        text-transform: uppercase;
+        border-radius: 5px;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+        border: none;
+        transition: 0.5s;
+      }
+
+      /* Add gradient border animation for Ask AI button */
+      .butn[onclick="toggleChatbot()"] {
+        position: relative;
+        background: linear-gradient(45deg, #00a5c6, #00a5c6);
+        z-index: 1;
+        transition: all 0.3s ease;
+      }
+
+      .butn[onclick="toggleChatbot()"]::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        right: -1px;
+        bottom: -1px;
+        background: linear-gradient(45deg, 
+          #00F5FF, 
+          #00B4FF, 
+          #00FFE5, 
+          #00FF9D,
+          #00F5FF);
+        background-size: 400% 400%;
+        border-radius: 6px;
+        z-index: -1;
+        animation: gradientBorder 3s ease-in-out infinite;
+      }
+
+      .butn[onclick="toggleChatbot()"]:hover::before {
+        animation: gradientBorder 2.5s ease-in-out infinite;
+      }
+
+      @keyframes gradientBorder {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .butn:not(.white) {
+        background-color: #00a5c6;
+        color: #ffffff;
+      }
+
+      .butn:not(.white):hover {
+        background-color: #00a5c6;
+        transform: none;
+      }
+
+      .butn:not(.white) .icon-arrow {
+        color: #ffffff;
+      }
+
+      .butn:not(.white):hover .icon-arrow {
+        transform: none;
+      }
+
+      /* White variant (Apply Now button) gets the special treatment */
+      .butn.white {
+        background-color: #ffffff;
+        color: #00A5C6;
+        border: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .butn.white:hover {
+        background-color: #00A5C6;
+        color: #ffffff;
+      }
+
+      .butn.white .icon-arrow {
+        color: #00A5C6;
+      }
+
+      .butn.white:hover .icon-arrow {
+        color: #ffffff;
+      }
+
+      .butn.md {
+        padding: 12px 30px;
+        font-size: 14px;
+      }
+
+      .chatbot-minimized-button:hover i {
+        transform: scale(1.2);
+        animation: none;
+      }
+
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Add gradient border animation for Ask AI button */
+      .butn[onclick="toggleChatbot()"] {
+        position: relative;
+        background: linear-gradient(45deg, #00a5c6, #00a5c6);
+        z-index: 1;
+        transition: all 0.3s ease;
+      }
+
+      .butn[onclick="toggleChatbot()"]::after {
+        content: attr(data-message);
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 15px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        animation: messagePopDown 4s ease infinite;
+        pointer-events: none;
+      }
+
+      .butn[onclick="toggleChatbot()"]:hover::after {
+        animation: none;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      @keyframes messagePopDown {
+        0%, 100% {
+          opacity: 0;
+          visibility: hidden;
+          transform: translateX(-50%) translateY(0);
+        }
+        20%, 80% {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(-50%) translateY(5px);
+        }
+      }
+
+      .chatbot-minimized-button:hover {
+        transform: translateX(-50%) scale(1.2);
+        animation: gradientAnimation 0.9s ease infinite;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .chatbot-minimized-button:hover i {
+        animation: iconBounce 0.6s ease-in-out infinite;
+        transition: transform 0.3s ease;
+      }
+
+      @keyframes iconBounce {
+        0% {
+          transform: scale(1.05);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1.05);
+        }
+      }
+
+      /* Loading Animation Styles */
+      .chatbot-loader {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 85px;
+        height: 85px;
+        border-radius: 100%;
+        background: linear-gradient(45deg, rgba(0, 245, 255, 0.8), rgba(0, 180, 255, 0.8), rgba(0, 255, 229, 0.8), rgba(0, 255, 157, 0.8));
+        background-size: 300% 300%;
+        z-index: 1001;
+        display: none;
+        animation: gradientAnimation 2s ease infinite, plasmaPulse 1.5s ease-in-out infinite;
+      }
+
+      .chatbot-loader:before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        border-bottom: 0 solid rgba(255, 255, 255, 0.05);
+        box-shadow: 
+          0 -10px 20px 20px rgba(0, 245, 255, 0.3) inset,
+          0 -5px 15px 10px rgba(0, 180, 255, 0.3) inset,
+          0 -2px 5px rgba(0, 255, 229, 0.3) inset,
+          0 -3px 2px rgba(0, 255, 157, 0.3) inset,
+          0 2px 0px rgba(255, 255, 255, 0.8),
+          0 2px 3px rgba(255, 255, 255, 0.8),
+          0 5px 5px rgba(0, 245, 255, 0.3),
+          0 10px 15px rgba(0, 180, 255, 0.3),
+          0 10px 20px 20px rgba(0, 255, 229, 0.3);
+        filter: blur(3px);
+        animation: 1.5s rotate linear infinite, plasmaGlow 2s ease-in-out infinite;
+      }
+
+      .chatbot-loader:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 100%;
+        background: radial-gradient(circle at center, 
+          rgba(0, 245, 255, 0.2) 0%,
+          rgba(0, 180, 255, 0.2) 30%,
+          rgba(0, 255, 229, 0.2) 60%,
+          rgba(0, 255, 157, 0.2) 100%);
+        animation: plasmaWave 2.5s ease-in-out infinite;
+      }
+
+      @keyframes plasmaPulse {
+        0%, 100% {
+          transform: translateX(-50%) scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: translateX(-50%) scale(1.1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes plasmaGlow {
+        0%, 100% {
+          box-shadow: 
+            0 -10px 20px 20px rgba(0, 245, 255, 0.3) inset,
+            0 -5px 15px 10px rgba(0, 180, 255, 0.3) inset,
+            0 -2px 5px rgba(0, 255, 229, 0.3) inset,
+            0 -3px 2px rgba(0, 255, 157, 0.3) inset,
+            0 2px 0px rgba(255, 255, 255, 0.8),
+            0 2px 3px rgba(255, 255, 255, 0.8),
+            0 5px 5px rgba(0, 245, 255, 0.3),
+            0 10px 15px rgba(0, 180, 255, 0.3),
+            0 10px 20px 20px rgba(0, 255, 229, 0.3);
+        }
+        50% {
+          box-shadow: 
+            0 -10px 20px 20px rgba(0, 245, 255, 0.5) inset,
+            0 -5px 15px 10px rgba(0, 180, 255, 0.5) inset,
+            0 -2px 5px rgba(0, 255, 229, 0.5) inset,
+            0 -3px 2px rgba(0, 255, 157, 0.5) inset,
+            0 2px 0px rgba(255, 255, 255, 0.9),
+            0 2px 3px rgba(255, 255, 255, 0.9),
+            0 5px 5px rgba(0, 245, 255, 0.5),
+            0 10px 15px rgba(0, 180, 255, 0.5),
+            0 10px 20px 20px rgba(0, 255, 229, 0.5);
+        }
+      }
+
+      @keyframes plasmaWave {
+        0%, 100% {
+          transform: scale(1);
+          opacity: 0.2;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.4;
+        }
+      }
+
+      @keyframes rotate {
+        100% {
+          transform: rotate(360deg)
+        }
+      }
+    </style>
+
+    <!-- Chatbot Container Structure -->
+    <div class="chatbot-backdrop" id="chatbotBackdrop"></div>
+    <div class="chatbot-loader" id="chatbotLoader"></div>
+    <div id="webchat"></div>
+    <button class="chatbot-minimized-button" id="minimizedButton" style="display: none;">
+      <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Add Three.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Particle Animation Styles -->
+    <style>
+      #particle-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 998;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      #particle-container.active {
+        opacity: 1;
+      }
+    </style>
+
+    <!-- Particle Animation Script -->
+    <script>
+      window.addEventListener('load', () => {
+        // Create particle container
+        const particleContainer = document.createElement('div');
+        particleContainer.id = 'particle-container';
+        document.body.appendChild(particleContainer);
+
+        // Initialize Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        particleContainer.appendChild(renderer.domElement);
+
+        // Create particles with more dynamic properties
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 3000; // Increased particle count
+        const posArray = new Float32Array(particlesCount * 3);
+        const colors = [
+          new THREE.Color('#00F5FF'),
+          new THREE.Color('#00B4FF'),
+          new THREE.Color('#00FFE5'),
+          new THREE.Color('#00FF9D')
+        ];
+
+        // Create a more interesting particle distribution
+        for(let i = 0; i < particlesCount * 3; i += 3) {
+          // Create a spherical distribution
+          const radius = Math.random() * 2;
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.random() * Math.PI;
+          
+          posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
+          posArray[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
+          posArray[i + 2] = radius * Math.cos(phi);
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        // Create particle materials with varying sizes and colors
+        const particlesMaterials = colors.map(color => 
+          new THREE.PointsMaterial({
+            size: 0.02 + Math.random() * 0.03,
+            color: color,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true
+          })
+        );
+
+        // Create multiple particle systems
+        const particlesMeshes = particlesMaterials.map(material => {
+          const mesh = new THREE.Points(particlesGeometry, material);
+          scene.add(mesh);
+          return mesh;
+        });
+
+        camera.position.z = 3;
+
+        // Enhanced animation
+        function animate() {
+          requestAnimationFrame(animate);
+          
+          // Rotate particles at different speeds
+          particlesMeshes.forEach((mesh, index) => {
+            mesh.rotation.x += 0.0002 * (index + 1);
+            mesh.rotation.y += 0.0003 * (index + 1);
+            
+            // Add subtle pulsing effect
+            const scale = 1 + Math.sin(Date.now() * 0.001 + index) * 0.1;
+            mesh.scale.set(scale, scale, scale);
+          });
+
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Update toggleChatbot function to handle particle animation
+        const originalToggleChatbot = window.toggleChatbot;
+        window.toggleChatbot = function() {
+          const webchat = document.getElementById('webchat');
+          const backdrop = document.getElementById('chatbotBackdrop');
+          const minimizedButton = document.getElementById('minimizedButton');
+          const loader = document.getElementById('chatbotLoader');
+          const particleContainer = document.getElementById('particle-container');
+          
+          if (webchat.classList.contains('active')) {
+            // Minimize the chatbot
+            webchat.classList.remove('active');
+            webchat.classList.add('minimized');
+            backdrop.classList.remove('active');
+            particleContainer.classList.remove('active');
+            minimizedButton.style.display = 'flex';
+            loader.style.display = 'none';
+          } else {
+            // Open the chatbot
+            webchat.classList.remove('minimized');
+            webchat.classList.add('active');
+            backdrop.classList.add('active');
+            particleContainer.classList.add('active');
+            minimizedButton.style.display = 'none';
+            loader.style.display = 'block';
+          }
+        };
+      });
+    </script>
+
+    <!-- Add this script right before the closing body tag -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Message icon messages
+        const iconMessages = [
+          "Hi there! 👋",
+          "Wanna talk? 💬",
+          "I'm your Genie! ✨",
+          "I'm here to assist you! 🤖"
+        ];
+        const messageIcon = document.querySelector('.chatbot-minimized-button');
+        let currentIconMessage = 0;
+
+        function updateIconMessage() {
+          messageIcon.setAttribute('data-message', iconMessages[currentIconMessage]);
+          currentIconMessage = (currentIconMessage + 1) % iconMessages.length;
+        }
+
+        // Update message icon message every 4 seconds
+        updateIconMessage();
+        setInterval(updateIconMessage, 4000);
+
+        // Ask AI button messages
+        const askAIMessages = [
+          "Need help? 🤔",
+          "Ask me anything! 💡",
+          "I'm here to help! 🎓",
+          "Let's chat! 💬"
+        ];
+        
+        // Find all Ask AI buttons (there might be multiple in the banner)
+        const askAIButtons = document.querySelectorAll('.butn[onclick="toggleChatbot()"]');
+        let currentAskAIMessage = 0;
+
+        function updateAskAIMessage() {
+          askAIButtons.forEach(button => {
+            button.setAttribute('data-message', askAIMessages[currentAskAIMessage]);
+          });
+          currentAskAIMessage = (currentAskAIMessage + 1) % askAIMessages.length;
+        }
+
+        // Update Ask AI button message every 4 seconds
+        updateAskAIMessage();
+        setInterval(updateAskAIMessage, 4000);
+      });
+    </script>
+
+    <link rel="stylesheet" href="css/bounce-loader.css">
+    <script src="js/loader.js" defer></script>
+  </head>
+
+  <body>
+    <div class="loader-container">
+        <div class="ball"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- MAIN WRAPPER
+    ================================================== -->
+    <div class="main-wrapper">
+      <!-- HEADER
+        ================================================== -->
+        <header class="header-style1 menu_area-light">
+          <div class="navbar-default border-bottom border-color-light-white">
+            <div class="container">
+              <div class="row align-items-center">
+                <div class="col-12 col-lg-12">
+                  <div class="menu_area alt-font">
+                    <nav class="navbar navbar-expand-lg navbar-light p-0">
+                      <div class="navbar-header navbar-header-custom">
+                        <!-- Start Logo -->
+                        <a href="index.html" class="navbar-brand">
+                          <img
+                            id="logo"
+                            src="img/logos/logo1.png"
+                            alt="logo"
+                          />
+                        </a>
+                        <!-- End Logo -->
+                      </div>
+        
+                      <div  class="navbar-toggler bg-primary"></div>
+        
+                      <!-- Start Attribute Navigation -->
+                      <div
+                      style="margin-right:  -80px ;" class="attr-nav align-items-xl-center ms-xl-auto main-font d-flex"
+                      >
+                        <ul class="d-flex align-items-center mb-0">
+                          <!-- Email Option -->
+                          <li class="nav-item me-4">
+                            <a href="mailto:youremail@email.com" class="nav-link">
+                              <i class="fas fa-envelope"></i>
+                              <span> mctoffice@daffodilvarsity.edu.bd</span>
+                            </a>
+                          </li>
+                          <!-- Call Us Option -->
+                          <li class="nav-item me-4">
+                            <a href="tel:+1235235598" class="nav-link">
+                              <i class="fas fa-phone-alt"></i>
+                              <span>	+880 1847334970</span>
+                            </a>
+                          </li>
+                          <!-- Apply Now Button -->
+                          <li  class="d-none d-xl-inline-block">
+                            <a href="https://admission.daffodilvarsity.edu.bd/" class="butn md text-white">
+                              <i class="fa-solid fa-arrow-right icon-arrow before"></i>
+                              <span  class="label">Apply Now</span>
+                              <i class="fa-solid fa-arrow-left icon-arrow after"></i>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- End Attribute Navigation -->
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+      <!-- BANNER
+        ================================================== -->
+      <section class="top-position1 p-0">
+        <div class="container-fluid px-0">
+          <div class="slider-fade1 owl-carousel owl-theme w-100">
+            <div
+              class="item bg-img cover-background pt-6 pb-10 pt-sm-6 pb-sm-14 py-md-16 py-lg-20 py-xxl-24 left-overlay-dark"
+              data-overlay-dark="8"
+              data-background="img/banner/slide4.webp"
+            >
+              <div class="container pt-6 pt-md-0">
+                <div class="row align-items-center">
+                  <div
+                    class="col-md-10 col-lg-8 col-xl-7 mb-1-9 mb-lg-0 py-6 position-relative"
+                  >
+                    <span class="h5 text-secondary">Maximum 75% waiver is available!</span>
+                    <h1
+                      class="display-1 font-weight-800 mb-2-6 title text-white"
+                    >
+                    Design. Develop. Deliver.
+                    </h1>
+                    <a href="javascript:void(0)" onclick="toggleChatbot()" class="butn my-1 mx-1">
+                      <i class="fa-solid fa-arrow-right icon-arrow before"></i>
+                      <span class="label">Ask AI!</span>
+                      <i class="fa-solid fa-arrow-left icon-arrow after"></i>
+                    </a>
+                    <a href="https://admission.daffodilvarsity.edu.bd/" class="butn white my-1"
+                      ><i class="fa-solid fa-arrow-right icon-arrow before"></i
+                      ><span class="label">Apply Now</span
+                      ><i class="fa-solid fa-arrow-left icon-arrow after"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="item bg-img cover-background pt-6 pb-10 pt-sm-6 pb-sm-14 py-md-16 py-lg-20 py-xxl-24 left-overlay-dark"
+              data-overlay-dark="8"
+              data-background="img/banner/slide5.webp"
+            >
+              <div class="container pt-6 pt-md-0">
+                <div class="row align-items-center">
+                  <div
+                    class="col-md-10 col-lg-8 col-xl-7 mb-1-9 mb-lg-0 py-6 position-relative"
+                  >
+                    <span class="h5 text-secondary">Maximum 75% waiver is available!</span>
+                    <h2
+                      class="display-1 font-weight-800 mb-2-6 title text-white"
+                    >
+                    Innovate. Create. Inspire. Excel
+                    </h2>
+                    <a href="javascript:void(0)" onclick="toggleChatbot()" class="butn my-1 mx-1">
+                      <i class="fa-solid fa-arrow-right icon-arrow before"></i>
+                      <span class="label">Ask AI!</span>
+                      <i class="fa-solid fa-arrow-left icon-arrow after"></i>
+                    </a>
+                    <a href="https://admission.daffodilvarsity.edu.bd/" class="butn white my-1"
+                      ><i class="fa-solid fa-arrow-right icon-arrow before"></i
+                      ><span class="label">Apply Now</span
+                      ><i class="fa-solid fa-arrow-left icon-arrow after"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="item bg-img cover-background pt-6 pb-10 pt-sm-6 pb-sm-14 py-md-16 py-lg-20 py-xxl-24 left-overlay-dark"
+              data-overlay-dark="8"
+              data-background="img/banner/slide6.webp"
+            >
+              <div class="container pt-6 pt-md-0">
+                <div class="row align-items-center">
+                  <div
+                    class="col-md-10 col-lg-8 col-xl-7 mb-1-9 mb-lg-0 py-6 position-relative"
+                  >
+                    <span class="h5 text-secondary">Maximum 75% waiver is available!</span>
+                    <h2
+                      class="display-1 font-weight-800 mb-2-6 title text-white"
+                    >
+                    Learn with fun in MCT
+                    </h2>
+                    <a href="javascript:void(0)" onclick="toggleChatbot()" class="butn my-1 mx-1">
+                      <i class="fa-solid fa-arrow-right icon-arrow before"></i>
+                      <span class="label">Ask AI!</span>
+                      <i class="fa-solid fa-arrow-left icon-arrow after"></i>
+                    </a>
+                    <a href="https://admission.daffodilvarsity.edu.bd/" class="butn white my-1"
+                      ><i class="fa-solid fa-arrow-right icon-arrow before"></i
+                      ><span class="label">Apply Now</span
+                      ><i class="fa-solid fa-arrow-left icon-arrow after"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="triangle-shape top-15 right-10 z-index-9 d-none d-md-block"
+        ></div>
+        <div
+          class="square-shape top-25 left-5 z-index-9 d-none d-xl-block"
+        ></div>
+        <div class="shape-five z-index-9 right-10 bottom-15"></div>
+      </section>
+
+      <!-- INFORMATION
+        ================================================== -->
+        <section class="p-0 overflow-visible service-block">
+          <div class="container">
+            <div class="row mt-n1-9">
+              <div class="col-md-6 col-lg-3 mt-1-9">
+                <div class="card card-style3 h-100">
+                  <div class="card-body px-1-9 py-2-3">
+                    <div class="mb-3 d-flex align-items-center">
+                      <div class="card-icon">
+                        <i class="fa-solid fa-pen-nib"></i>
+                      </div>
+                      <h4 class="ms-4 mb-0">Visual Arts</h4>
+                    </div>
+                    <div>
+                      <p class="mb-3">
+                        It was popularised in the 1960s with the release of Letraset
+                        sheets containing.
+                      </p>
+                      <a href="https://daffodilvarsity.edu.bd/department/mct" class="butn-style1 secondary">Learn More  +</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3 mt-1-9">
+                <div class="card card-style3 h-100">
+                  <div class="card-body px-1-9 py-2-3">
+                    <div class="mb-3 d-flex align-items-center">
+                      <div class="card-icon">
+                        <i class="fa-solid fa-hippo"></i>
+                      </div>
+                      <h4 class="ms-4 mb-0">3D animation &amp; Modeling</h4>
+                    </div>
+                    <div>
+                      <p class="mb-3">
+                        It was popularised in the 1960s with the release of Letraset
+                        sheets containing.
+                      </p>
+                      <a href="https://daffodilvarsity.edu.bd/department/mct" class="butn-style1 secondary">Learn More +</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3 mt-1-9">
+                <div class="card card-style3 h-100">
+                  <div class="card-body px-1-9 py-2-3">
+                    <div class="mb-3 d-flex align-items-center">
+                      <div class="card-icon">
+                        <i class="fa-solid fa-code"></i>
+                      </div>
+                      <h4 class="ms-4 mb-0">Web, Game Development, Augmented Reality and Virtual Reality</h4>
+                    </div>
+                    <div>
+                      <p class="mb-3">
+                        It was popularised in the 1960s with the release of Letraset
+                        sheets containing.
+                      </p>
+                      <a href="https://daffodilvarsity.edu.bd/department/mct" class="butn-style1 secondary">Learn More +</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3 mt-1-9">
+                <div class="card card-style3 h-100">
+                  <div class="card-body px-1-9 py-2-3">
+                    <div class="mb-3 d-flex align-items-center">
+                      <div class="card-icon">
+                        <i class="fa-solid fa-film"></i>
+                      </div>
+                      <h4 class="ms-4 mb-0">Film and media</h4>
+                    </div>
+                    <div>
+                      <p class="mb-3">
+                        It was popularised in the 1960s with the release of Letraset
+                        sheets containing.
+                      </p>
+                      <a href="https://daffodilvarsity.edu.bd/department/mct" class="butn-style1 secondary">Learn More +</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      <!-- ABOUTUS
+        ================================================== -->
+      <section class="aboutus-style-01 position-relative">
+        <div class="container pt-lg-4">
+          <div class="row align-items-center mt-n1-9">
+            <div class="col-md-12 col-lg-6 mt-1-9 order-2 order-lg-1">
+              <div class="position-relative">
+                <div class="position-relative">
+                  <div class="image-hover">
+                    <img
+                      src="img/content/about-03.jpg"
+                      alt="..."
+                      class="ps-sm-10 position-relative z-index-1"
+                    />
+                  </div>
+                  <img
+                    src="img/content/about-02.jpg"
+                    alt="..."
+                    class="img-2 d-none d-xl-block"
+                  />
+                  <img
+                    src="img/bg/bg-07.png"
+                    class="bg-shape1 d-none d-sm-block"
+                    alt="..."
+                  />
+                </div>
+                <div class="d-none d-sm-block">
+                  <div class="about-text">
+                    <div class="about-counter">
+                      <span class="countup">15</span> +
+                    </div>
+                    <p>YEARS EXPERIENCE JUST ACHIVED</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6 mt-1-9 order-2 order-lg-1">
+              <div class="section-heading text-start mb-2">
+                <span class="sub-title">welcome!</span>
+              </div>
+              <h2 class="font-weight-800 h1 mb-1-9 text-primary">
+                Transforming Ideas into Digital Masterpieces.
+              </h2>
+              <p class="about-border lead fst-italic mb-1-9">
+                Discover a world of innovation with Multimedia and Creative Technology.
+              </p>
+              <blockquote>
+                Our programs are designed to empower students with cutting-edge skills in multimedia, animation, design, and technology. Learn at your own pace, anywhere, anytime, and unlock your creative potential to excel in the ever-changing digital landscape.
+              </blockquote>
+              <div class="dotted-seprator pt-1-9 mt-1-9"></div>
+              <div class="row">
+                <div class="col-sm-6 col-12 mb-3 mb-sm-0">
+                  <div class="media">
+                    <i class="ti-mobile display-15 text-secondary"></i>
+                    <div class="media-body align-self-center ms-3">
+                      <h4 class="mb-1 h5">Phone Number</h4>
+                      <p class="mb-0">+880 1847334970</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-12">
+                  <div class="media">
+                    <i class="ti-email display-15 text-secondary"></i>
+                    <div class="media-body align-self-center ms-3">
+                      <h4 class="mb-1 h5">Email Address</h4>
+                      <p class="mb-0">mctoffice@daffodilvarsity.edu.bd</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="shape18">
+            <img src="img/bg/bg-01.jpg" alt="..." />
+          </div>
+          <div class="shape20">
+            <img src="img/bg/bg-02.jpg" alt="..." />
+          </div>
+        </div>
+      </section>
+<!--Start slogan area-->
+<section class="slogan-area" style="background-image:url(img/banner/slogan-bg.jpg);">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="inner-content text-center wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                  <h1>A great place to grow up your<br> creativity with technology.</h1>
+                  <p>We promised that helping you to develop and learn through fun and creativity.</p>
+                  <p></p>
+                  <a class="thm-btn bgclr-1" href="https://admission.daffodilvarsity.edu.bd/">Apply Now</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<!--End slogan area-->
+      <!-- Student Works
+        ================================================== -->
+      <section class="bg-very-light-gray">
+        <div class="container">
+          <div class="section-heading">
+            <span class="sub-title">discover creativity</span>
+            <h2 class="h1 mb-0">Our Students Work</h2>
+          </div>
+          <div class="row g-xxl-5 mt-n2-6">
+            <div class="col-md-6 col-xl-4 mt-2-6">
+              <div class="card card-style1 p-0 h-100">
+                <div class="card-img rounded-0">
+                  <div class="image-hover">
+                    <img
+                      class="rounded-top"
+                      src="img/content/courses-01.jpg"
+                      alt="..."
+                    />
+                  </div>
+                  <a href="#" class="course-tag">Lighting and Rendering</a>
+                  <a href="#!"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="card-body position-relative pt-0 px-1-9 pb-1-9">
+                  <div class="card-author d-flex">
+                    <div class="avatar">
+                      <img
+                        class="rounded-circle"
+                        src="img/avatar/avatar-01.jpg"
+                        alt="..."
+                      />
+                    </div>
+                    <h4 class="mb-0 h6">Md. Riaj Hossen</h4>
+                  </div>
+                  <div class="pt-6">
+                    <h3 class="h4 mb-4">
+                      <a href="https://www.facebook.com/photo/?fbid=1531186454173415&set=pcb.1531186547506739&__cft__[0]=AZWEfG6yUpjCIHhwOhnTvlHQQo61Ofpdm1vAkbwllX3jduqOrc3zAQuSeNa8xcBcYMBaNc4Sj_FsHpC_q1nquVy02nELJxdOxlF5kEAvDTlGyuLCEOzKDdc0ejG4dWsT-mgoqvr7gD3uFogKPmCLt9Y51v37NN3Zasq7xTe2crgTGsG9xogpj5CxDXD-7LOcuhk&__tn__=*bH-R"
+                        >Interior Lighting</a
+                      >
+                    </h3>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                     
+                      <div class="display-30">
+                        <i class="ti-user me-2"></i>Batch - 33
+                      </div>
+                      <div class="display-30"><i class="ti-agenda me-2"></i>5th Semester</div>
+                      
+                    </div>
+                    <div class="dotted-seprator pt-4 mt-4 d-flex justify-content-between align-items-center">
+                      <span class="badge-soft">Mid-project</span>
+                      <h5 class="text-primary mb-0">2022</h5>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-4 mt-2-6">
+              <div class="card card-style1 p-0 h-100">
+                <div class="card-img rounded-0 border-color-secondary">
+                  <div class="image-hover">
+                    <img
+                      class="rounded-top"
+                      src="img/content/courses-02.jpg"
+                      alt="..."
+                    />
+                  </div>
+                  <a href="#" class="course-tag secondary"
+                    >Design</a
+                  >
+                  <a href="#!"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="card-body position-relative pt-0 px-1-9 pb-1-9">
+                  <div class="card-author d-flex">
+                    <div class="avatar">
+                      <img
+                        class="rounded-circle"
+                        src="img/avatar/avatar-02.jpg"
+                        alt="..."
+                      />
+                    </div>
+                    <h4 class="mb-0 h6">Tanvin Khan Suan</h4>
+                  </div>
+                  <div class="pt-6">
+                    <h3 class="h4 mb-4">
+                      <a href="https://www.behance.net/gallery/143489025/Game-Factory-App-Icon-Design-Modern-Logo-Logo-Folio"
+                        >Icon Design</a
+                      >
+                    </h3>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      
+                      <div class="display-30">
+                        <i class="ti-user me-2"></i>Batch - 33
+                      </div>
+                      <div class="display-30"><i class="ti-agenda me-2"></i>3rd Semester</div>
+                      
+                    </div>
+                    <div class="dotted-seprator pt-4 mt-4 d-flex justify-content-between align-items-center">
+                      <span class="badge-soft">Personal Project</span>
+                      <h5 class="text-primary mb-0">2022</h5>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-4 mt-2-6">
+              <div class="card card-style1 p-0 h-100">
+                <div class="card-img rounded-0">
+                  <div class="image-hover">
+                    <img
+                      class="rounded-top"
+                      src="img/content/courses-03.jpg"
+                      alt="..."
+                    />
+                  </div>
+                  <a href="#" class="course-tag">Modeling</a>
+                  <a href="#!"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="card-body position-relative pt-0 px-1-9 pb-1-9">
+                  <div class="card-author d-flex">
+                    <div class="avatar">
+                      <img
+                        class="rounded-circle"
+                        src="img/avatar/avatar-03.jpg"
+                        alt="..."
+                      />
+                    </div>
+                    <h4 class="mb-0 h6">Raihan Mumtarin Simanto</h4>
+                  </div>
+                  <div class="pt-6">
+                    <h3 class="h4 mb-4">
+                      <a href="https://www.linkedin.com/posts/raihan-mumtarin-simanto-376393290_latest-models-and-renders-httpslnkdin-activity-7182731396166172672-A28e?utm_source=share&utm_medium=member_desktop"
+                        >Product Modeling</a
+                      >
+                    </h3>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      
+                      <div class="display-30">
+                        <i class="ti-user me-2"></i>Batch - 33
+                      </div>
+                      <div class="display-30"><i class="ti-agenda me-2"></i>3rd Semester</div>
+                     
+                       
+                    </div>
+                    <div class="dotted-seprator pt-4 mt-4 d-flex justify-content-between align-items-center">
+                      <span class="badge-soft">Mid-project</span>
+                      <h5 class="text-primary mb-0">2023</h5>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-4 mt-2-6">
+              <div class="card card-style1 p-0 h-100">
+                <div class="card-img rounded-0 border-color-secondary">
+                  <div class="image-hover">
+                    <img
+                      class="rounded-top"
+                      src="img/content/courses-04.jpg"
+                      alt="..."
+                    />
+                  </div>
+                  <a href="courses-list.html" class="course-tag secondary"
+                    >Motion</a
+                  >
+                  <a href="#!"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="card-body position-relative pt-0 px-1-9 pb-1-9">
+                  <div class="card-author d-flex">
+                    <div class="avatar">
+                      <img
+                        class="rounded-circle"
+                        src="img/avatar/avatar-04.jpg"
+                        alt="..."
+                      />
+                    </div>
+                    <h4 class="mb-0 h6">Ashik Miah</h4>
+                  </div>
+                  <div class="pt-6">
+                    <h3 class="h4 mb-4">
+                      <a href="course-details.html"
+                        >Motion Designer</a
+                      >
+                    </h3>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                     
+                      <div class="display-30">
+                        <i class="ti-user me-2"></i>Batch - 33
+                      </div>
+                      <div class="display-30"><i class="ti-agenda me-2"></i>3rd Semester</div>
+                      
+                    </div>
+                    <div class="dotted-seprator pt-4 mt-4 d-flex justify-content-between align-items-center">
+                      <span class="badge-soft">Personal Project</span>
+                      <h5 class="text-primary mb-0">2022</h5>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-4 mt-2-6">
+              <div class="card card-style1 p-0 h-100">
+                <div class="card-img rounded-0">
+                  <div class="image-hover">
+                    <img
+                      class="rounded-top"
+                      src="img/content/courses-05.jpg"
+                      alt="..."
+                    />
+                  </div>
+                  <a href="#" class="course-tag">Videography</a>
+                  <a href="#!"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="card-body position-relative pt-0 px-1-9 pb-1-9">
+                  <div class="card-author d-flex">
+                    <div class="avatar">
+                      <img
+                        class="rounded-circle"
+                        src="img/avatar/avatar-05.jpg"
+                        alt="..."
+                      />
+                    </div>
+                    <h4 class="mb-0 h6">S.M. Reafat Rahman</h4>
+                  </div>
+                  <div class="pt-6">
+                    <h3 class="h4 mb-4">
+                      <a href="https://fb.watch/wcoyZO0nKA/"
+                        >Video Production</a
+                      >
+                    </h3>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      
+                      <div class="display-30">
+                        <i class="ti-user me-2"></i>Batch - 33
+                      </div>
+                      <div class="display-30"><i class="ti-agenda me-2"></i>4th Semester</div>
+                      
+                    </div>
+                    <div class="dotted-seprator pt-4 mt-4 d-flex justify-content-between align-items-center">
+                      <span class="badge-soft">Final-project</span>
+                      <h5 class="text-primary mb-0">2024</h5>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-4 mt-2-6">
+              <div class="card card-style1 p-0 h-100">
+                <div class="card-img rounded-0 border-color-secondary">
+                  <div class="image-hover">
+                    <img
+                      class="rounded-top"
+                      src="img/content/courses-06.jpg"
+                      alt="..."
+                    />
+                  </div>
+                  <a href="#" class="course-tag secondary"
+                    >Animation</a
+                  >
+                  <a href="#!"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="card-body position-relative pt-0 px-1-9 pb-1-9">
+                  <div class="card-author d-flex">
+                    <div class="avatar">
+                      <img
+                        class="rounded-circle"
+                        src="img/avatar/avatar-06.jpg"
+                        alt="..."
+                      />
+                    </div>
+                    <h4 class="mb-0 h6">Abdullah Al Galib Shoikat</h4>
+                  </div>
+                  <div class="pt-6">
+                    <h3 class="h4 mb-4">
+                      <a href="https://youtu.be/szORzsmvhQk?si=kMvnHsaPbzGi-QKU"
+                        >2D Animation</a
+                      >
+                    </h3>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                  
+                      <div class="display-30">
+                        <i class="ti-user me-2"></i>Batch - 33
+                      </div>
+                      <div class="display-30"><i class="ti-agenda me-2"></i>4th Semester</div>
+                      
+                    </div>
+                    <div class="dotted-seprator pt-4 mt-4 d-flex justify-content-between align-items-center">
+                      <span class="badge-soft">Final-project</span>
+                      <h5 class="text-primary mb-0">2024</h5>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <!-- TRENDING CATEGORIES
+        ================================================== -->
+      <section
+        class="bg-img cover-background dark-overlay"
+        data-overlay-dark="8"
+        data-background="img/bg/bg-06.jpg"
+      >
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <div class="section-heading text-center">
+                <span class="sub-title">Instructors</span>
+                <h2 style="color: aliceblue;" class="h1 mb-0">Top Courses</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-n1-9">
+            <div class="col-sm-6 col-lg-4 col-xl-3 mt-1-9">
+              <a href="https://elearn.daffodilvarsity.edu.bd/course/view.php?id=26304" class="category-item-01">
+                <div class="category-img">
+                  <img src="img/icons/icon-09.png" alt="" />
+                </div>
+                <div class="ms-3">
+                  <h3 class="h4 mb-0 text-white">3D Environment Design</h3>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6 col-lg-4 col-xl-3 mt-1-9">
+              <a href="https://elearn.daffodilvarsity.edu.bd/course/view.php?id=23635" class="category-item-01">
+                <div class="category-img">
+                  <img src="img/icons/icon-10.png" alt="" />
+                </div>
+                <div class="ms-3">
+                  <h3 class="h4 mb-0 text-white">3D Animation</h3>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6 col-lg-4 col-xl-3 mt-1-9">
+              <a href="https://elearn.daffodilvarsity.edu.bd/course/view.php?id=23665" class="category-item-01">
+                <div class="category-img">
+                  <img src="img/icons/icon-11.png" alt="" />
+                </div>
+                <div class="ms-3">
+                  <h3 class="h4 mb-0 text-white">2D Animation</h3>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6 col-lg-4 col-xl-3 mt-1-9">
+              <a href="https://elearn.daffodilvarsity.edu.bd/course/view.php?id=23651" class="category-item-01">
+                <div class="category-img">
+                  <img src="img/icons/icon-12.png" alt="" />
+                </div>
+                <div class="ms-3">
+                  <h3 class="h4 mb-0 text-white">UI &amp; Design</h3>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6 col-lg-4 col-xl-3 mt-1-9">
+              <a href="https://elearn.daffodilvarsity.edu.bd/course/view.php?id=21581" class="category-item-01">
+                <div class="category-img">
+                  <img src="img/icons/icon-08.png" alt="" />
+                </div>
+                <div class="ms-3">
+                  <h3 class="h4 mb-0 text-white">Object Oriented Programming</h3>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6 col-lg-4 col-xl-3 mt-1-9">
+              <a href="https://elearn.daffodilvarsity.edu.bd/course/view.php?id=21738" class="category-item-01">
+                <div class="category-img">
+                  <img src="img/icons/icon-07.png" alt="" />
+                </div>
+                <div class="ms-3">
+                  <h3 class="h4 mb-0 text-white">Motion Graphics</h3>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6 col-lg-4 col-xl-3 mt-1-9">
+              <a href="https://elearn.daffodilvarsity.edu.bd/course/view.php?id=21585" class="category-item-01">
+                <div class="category-img">
+                  <img src="img/icons/icon-06.png" alt="" />
+                </div>
+                <div class="ms-3">
+                  <h3 class="h4 mb-0 text-white">Basic Typography</h3>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6 col-lg-4 col-xl-3 mt-1-9">
+              <a href="https://elearn.daffodilvarsity.edu.bd/course/view.php?id=26330" class="category-item-01">
+                <div class="category-img">
+                  <img src="img/icons/icon-05.png" alt="" />
+                </div>
+                <div class="ms-3">
+                  <h3 class="h4 mb-0 text-white">Web Engineering</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ONLINE INSTRUCTORS
+        ================================================== -->
+      <section class="bg-very-light-gray position-relative">
+        <div class="container">
+          <div class="section-heading">
+            <span class="sub-title">Instructors</span>
+            <h2 class="h1 mb-0">Experience Instructors</h2>
+          </div>
+          <div class="row position-relative mt-n1-9">
+            <div class="col-md-6 col-lg-4 mt-1-9">
+              <div style="margin-bottom: 20px;" class="team-style1 text-center">
+                <img
+                  src="img/team/team-10.jpg"
+                  class="border-radius-5"
+                  alt="..."
+                />
+                <div class="team-info">
+                  <h3 class="text-primary mb-1 h4">Mr. Md. Salah Uddin</h3>
+                  <span class="font-weight-600 text-secondary"
+                    >Assistant Professor and Head </span
+                  >
+                </div>
+                <div class="team-overlay">
+                  <div class="d-table h-100 w-100">
+                    <div class="d-table-cell align-middle">
+                      <h3>
+                        <a href="instructors-details.html" class="text-white"
+                          >About Mr. Md. Salah Uddin</a
+                        >
+                      </h3>
+                      <p class="text-white mb-0">
+                        I preserve each companion certification and I'm an
+                        authorized AWS solutions architect professional.
+                      </p>
+                      <ul class="social-icon-style1">
+                        <li>
+                          <a href="https://www.facebook.com/salahuddin.mct"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-youtube"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-linkedin-in"></i></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mt-1-9">
+              <div class="team-style1 text-center">
+                <img
+                  src="img/team/team-11.jpg"
+                  class="border-radius-5"
+                  alt="..."
+                />
+                <div class="team-info">
+                  <h3 class="text-primary mb-1 h4">Mr. Kazi Jahid Hasan</h3>
+                  <span class="font-weight-600 text-secondary"
+                    >Assistant Professor </span
+                  >
+                </div>
+                <div class="team-overlay">
+                  <div class="d-table h-100 w-100">
+                    <div class="d-table-cell align-middle">
+                      <h3>
+                        <a href="instructors-details.html" class="text-white"
+                          >About Mr. Kazi Jahid Hasan</a
+                        >
+                      </h3>
+                      <p class="text-white mb-0">
+                        I preserve each companion certification and I'm an
+                        authorized AWS solutions architect professional.
+                      </p>
+                      <ul class="social-icon-style1">
+                        <li>
+                          <a href="https://www.facebook.com/kazijahid.hasan.14/"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-youtube"></i></a>
+                        </li>
+                        <li>
+                          <a href="https://bd.linkedin.com/in/kazi-jahid-hasan-3bb033146"><i class="fab fa-linkedin-in"></i></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mt-1-9">
+              <div class="team-style1 text-center">
+                <img
+                  src="img/team/team-12.jpg"
+                  class="border-radius-5"
+                  alt="..."
+                />
+                <div class="team-info">
+                  <h3 class="text-primary mb-1 h4">Md. Nazmul Arefin</h3>
+                  <span class="font-weight-600 text-secondary"
+                    >Lecturer</span
+                  >
+                </div>
+                <div class="team-overlay">
+                  <div class="d-table h-100 w-100">
+                    <div class="d-table-cell align-middle">
+                      <h3>
+                        <a href="instructors-details.html" class="text-white"
+                          >About Md. Nazmul Arefin</a
+                        >
+                      </h3>
+                      <p class="text-white mb-0">
+                        I preserve each companion certification and I'm an
+                        authorized AWS solutions architect professional.
+                      </p>
+                      <ul class="social-icon-style1">
+                        <li>
+                          <a href="#!"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-youtube"></i></a>
+                        </li>
+                        <li>
+                          <a href="https://bd.linkedin.com/in/arefinshimon"><i class="fab fa-linkedin-in"></i></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="team-bg-shape d-none d-xl-block">
+              <img src="img/bg/bg-02.jpg" alt="..." />
+            </div>
+          </div>
+          <div class="shape18">
+            <img src="img/bg/bg-01.jpg" alt="..." />
+          </div>
+          <div class="shape20">
+            <img src="img/bg/bg-02.jpg" alt="..." />
+          </div>
+          <div class="shape21">
+            <img src="img/bg/bg-03.jpg" alt="..." />
+          </div>
+          <div class="row position-relative mt-n1-9">
+            <div class="col-md-6 col-lg-4 mt-1-9">
+              <div class="team-style1 text-center">
+                <img
+                  src="img/team/team-14.jpg"
+                  class="border-radius-5"
+                  alt="..."
+                />
+                <div class="team-info">
+                  <h3 class="text-primary mb-1 h4">Mr. Mizanur Rahman</h3>
+                  <span class="font-weight-600 text-secondary"
+                    >Assistant Professor  </span
+                  >
+                </div>
+                <div class="team-overlay">
+                  <div class="d-table h-100 w-100">
+                    <div class="d-table-cell align-middle">
+                      <h3>
+                        <a href="instructors-details.html" class="text-white"
+                          >About Mr. Mizanur Rahman</a
+                        >
+                      </h3>
+                      <p class="text-white mb-0">
+                        I preserve each companion certification and I'm an
+                        authorized AWS solutions architect professional.
+                      </p>
+                      <ul class="social-icon-style1">
+                        <li>
+                          <a href="https://www.facebook.com/mizanur.ashik/"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-youtube"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-linkedin-in"></i></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mt-1-9">
+              <div class="team-style1 text-center">
+                <img
+                  src="img/team/team-15.jpg"
+                  class="border-radius-5"
+                  alt="..."
+                />
+                <div class="team-info">
+                  <h3 class="text-primary mb-1 h4">Mr. Apurba Ghosh</h3>
+                  <span class="font-weight-600 text-secondary"
+                    >Assistant Professor  </span
+                  >
+                </div>
+                <div class="team-overlay">
+                  <div class="d-table h-100 w-100">
+                    <div class="d-table-cell align-middle">
+                      <h3>
+                        <a href="instructors-details.html" class="text-white"
+                          >About Mr. Apurba Ghosh</a
+                        >
+                      </h3>
+                      <p class="text-white mb-0">
+                        I preserve each companion certification and I'm an
+                        authorized AWS solutions architect professional.
+                      </p>
+                      <ul class="social-icon-style1">
+                        <li>
+                          <a href="https://www.facebook.com/apurbacga/"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li>
+                          <a href="https://www.youtube.com/channel/UCrusLjZVkk_iKFgcNr2jRrA"><i class="fab fa-youtube"></i></a>
+                        </li>
+                        <li>
+                          <a href="https://bd.linkedin.com/in/apurba-ghosh"><i class="fab fa-linkedin-in"></i></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mt-1-9">
+              <div class="team-style1 text-center">
+                <img
+                  src="img/team/team-16.jpg"
+                  class="border-radius-5"
+                  alt="..."
+                />
+                <div class="team-info">
+                  <h3 class="text-primary mb-1 h4">Mr. S M Monowar Kayser</h3>
+                  <span class="font-weight-600 text-secondary"
+                    >Lecturer</span
+                  >
+                </div>
+                <div class="team-overlay">
+                  <div class="d-table h-100 w-100">
+                    <div class="d-table-cell align-middle">
+                      <h3>
+                        <a href="instructors-details.html" class="text-white"
+                          >About Mr. S M Monowar Kayser</a
+                        >
+                      </h3>
+                      <p class="text-white mb-0">
+                        I preserve each companion certification and I'm an
+                        authorized AWS solutions architect professional.
+                      </p>
+                      <ul class="social-icon-style1">
+                        <li>
+                          <a href="https://www.facebook.com/monowarkaysermoon"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-youtube"></i></a>
+                        </li>
+                        <li>
+                          <a href="#!"><i class="fab fa-linkedin-in"></i></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="team-bg-shape d-none d-xl-block">
+              <img src="img/bg/bg-07.png" alt="..." />
+            </div>
+          </div>
+          <div class="shape18">
+            <img src="img/bg/bg-01.jpg" alt="..." />
+          </div>
+          <div class="shape20">
+            <img src="img/bg/bg-02.jpg" alt="..." />
+          </div>
+          <div class="shape21">
+            <img src="img/bg/bg-03.jpg" alt="..." />
+          </div>
+        </div>
+        </div>
+        
+        
+      </section>
+
+      <!-- WHY CHOOSE US
+        ================================================== -->
+        <section>
+          <div class="container">
+              <div class="row align-items-center mt-n1-9">
+                  <div class="col-lg-6 mt-1-9">
+                      <div class="why-choose-img position-relative">
+                          <img class="border-radius-5" src="img/banner/slide7.webp" alt="...">
+                          <div class="position-absolute top-50 start-50 translate-middle story-video">
+                              <a class="video video_btn" href="https://youtu.be/YMXYWRGQw9k"><i class="fas fa-play font-size22"></i></a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-6 mt-1-9">
+                      <div class="why-choose-content">
+                          <div class="mb-1-9">
+                              <h2 class="h1 mb-2 text-primary">Our Facilities</h2>
+                              <p class="mb-0">Explore the exceptional resources and support we offer to help you thrive in the world of multimedia and creative technology.</p>
+                          </div>
+                          <div class="media">
+                              <i class="ti-panel display-15 text-secondary"></i>
+                              <div class="media-body ps-3">
+                                  <h4 class="h5 font-weight-700 mb-1 mb-md-2">Self Registration</h4>
+                                  <p class="mb-0 w-lg-90">
+                                    Take control of your learning journey with our seamless self-registration system, giving you access to the latest multimedia courses and tools tailored to your needs.
+                                  </p>
+                              </div>
+                          </div>
+                          <div class="dotted-seprator pt-1-9 mt-1-9"></div>
+                          <div class="media">
+                              <i class="ti-package display-15 text-secondary"></i>
+                              <div class="media-body ps-3">
+                                  <h4 class="h5 font-weight-700 mb-1 mb-md-2">Accreditation Support</h4>
+                                  <p class="mb-0 w-lg-90">
+                                    Receive dedicated guidance for certifications and accreditations that ensure your skills meet global standards in multimedia, animation, design, and beyond.
+                                  </p>
+                              </div>
+                          </div>
+                          <div class="dotted-seprator pt-1-9 mt-1-9"></div>
+                          <div class="media">
+                              <i class="ti-bookmark-alt display-15 text-secondary"></i>
+                              <div class="media-body ps-3">
+                                  <h4 class="h5 font-weight-700 mb-1 mb-md-2">Brand Integration</h4>
+                                  <p class="mb-0 w-lg-90">
+                                    Collaborate on real-world projects with leading brands to gain practical experience and build a portfolio that showcases your creative expertise.
+
+
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      
+      <!-- TESTIMONIAL
+        ================================================== -->
+      <section class="bg-light">
+        <div class="container">
+          <div class="section-heading">
+            <span class="sub-title">testimonial</span>
+            <h2 class="h1 mb-0">What Students & Alumni Say About Us!</h2>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-8 position-relative">
+              <div
+                class="testimonial-carousel text-center owl-carousel owl-theme"
+              >
+                <!--Start single testimonial item-->
+                <div class="single-testimonial-item text-center">
+                  <div class="text-box">
+                      <p>Coming as a total beginner, I would like to emphasize the artistic 'fire' that The Art Studio NY has set in me. Concentrating on my art every week erases the rest of the world and results in feelings of calm, peace.</p>
+                  </div>
+                  <div class="img-box">
+                      <img src="img/testimonial/1.png" alt="Client Photo">
+                  </div>
+                  <div class="title-box text-center">
+                      <h4>Justin Guarini</h4>
+                  </div>
+              </div>
+              <!--End single testimonial item-->
+              <!--Start single testimonial item-->
+              <div class="single-testimonial-item text-center">
+                  <div class="text-box">
+                      <p>"We were thrilled to bring third-grade public school students for what became the best hands-on experience the students have had. One child said that it was the best day ever. We plan to return year after year."</p>
+                  </div>
+                  <div class="img-box">
+                      <img src="img/testimonial/2.png" alt="Client Photo">
+                  </div>
+                  <div class="title-box text-center">
+                      <h4>Trina Catlen</h4>
+                  </div>
+              </div>
+              <!--End single testimonial item-->
+              <!--Start single testimonial item-->
+              <div class="single-testimonial-item text-center">
+                  <div class="text-box">
+                      <p>Coming as a total beginner, I would like to emphasize the artistic 'fire' that The Art Studio NY has set in me. Concentrating on my art every week erases the rest of the world and results in feelings of calm, peace.</p>
+                  </div>
+                  <div class="img-box">
+                      <img src="img/testimonial/1.png" alt="Client Photo">
+                  </div>
+                  <div class="title-box text-center">
+                      <h4>Justin Guarini</h4>
+                  </div>
+              </div>
+              <!--End single testimonial item-->
+              <!--Start single testimonial item-->
+              <div class="single-testimonial-item text-center">
+                  <div class="text-box">
+                      <p>"We were thrilled to bring third-grade public school students for what became the best hands-on experience the students have had. One child said that it was the best day ever. We plan to return year after year."</p>
+                  </div>
+                  <div class="img-box">
+                      <img src="img/testimonial/2.png" alt="Client Photo">
+                  </div>
+                  <div class="title-box text-center">
+                      <h4>Trina Catlen</h4>
+                  </div>
+              </div>
+              <!--End single testimonial item-->
+              <!--Start single testimonial item-->
+              <div class="single-testimonial-item text-center">
+                  <div class="text-box">
+                      <p>Coming as a total beginner, I would like to emphasize the artistic 'fire' that The Art Studio NY has set in me. Concentrating on my art every week erases the rest of the world and results in feelings of calm, peace.</p>
+                  </div>
+                  <div class="img-box">
+                      <img src="img/testimonial/1.png" alt="Client Photo">
+                  </div>
+                  <div class="title-box text-center">
+                      <h4>Justin Guarini</h4>
+                  </div>
+              </div>
+              <!--End single testimonial item-->
+              <!--Start single testimonial item-->
+              <div class="single-testimonial-item text-center">
+                  <div class="text-box">
+                      <p>"We were thrilled to bring third-grade public school students for what became the best hands-on experience the students have had. One child said that it was the best day ever. We plan to return year after year."</p>
+                  </div>
+                  <div class="img-box">
+                      <img src="img/testimonial/2.png" alt="Client Photo">
+                  </div>
+                  <div class="title-box text-center">
+                      <h4>Trina Catlen</h4>
+                  </div>
+              </div>
+              <!--End single testimonial item-->
+                
+              </div>
+              <h6 class="testimonial-quote">"</h6>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img src="img/avatar/avatar-01.jpg" class="position-absolute bottom-15 left-20 d-none d-lg-block rounded-circle w-40px" alt="...">
+          <img src="img/avatar/avatar-02.jpg" class="position-absolute bottom-40 left-10 d-none d-lg-block rounded-circle" alt="...">
+          <img src="img/avatar/avatar-03.jpg" class="position-absolute left-20 top-20 d-none d-lg-block rounded-circle w-60px" alt="...">
+          <img src="img/avatar/avatar-04.jpg" class="position-absolute top-45 right-10 d-none d-lg-block rounded-circle" alt="...">
+          <img src="img/avatar/avatar-05.jpg" class="position-absolute top-25 right-20 d-none d-lg-block rounded-circle w-40px" alt="...">
+          <img src="img/avatar/avatar-06.jpg" class="position-absolute bottom-15 right-15 d-none d-lg-block rounded-circle" alt="...">
+      </div>
+        <div class="shape21">
+          <img src="img/bg/bg-03.jpg" alt="..." />
+        </div>
+        <div class="shape22">
+          <img src="img/bg/bg-02.jpg" alt="..." />
+        </div>
+        <div class="shape23">
+          <img src="img/bg/bg-07.png" alt="..." />
+        </div>
+        <span class="process-left-shape d-none d-sm-block"></span>
+      </section>
+
+      <!-- PROCESS
+        ================================================== -->
+      
+
+      <!-- UPCOMING EVENT
+        ================================================== -->
+      <section class="bg-very-light-gray">
+        <div class="container">
+          <div class="section-heading">
+            <span class="sub-title">latest events</span>
+            <h2 class="h1 mb-0">Our Upcoming Events</h2>
+          </div>
+          <div class="row g-xxl-5 mt-n2-9">
+            <div class="col-xl-6 mt-2-9">
+              <div class="row g-0 event-wrapper">
+                <div
+                  class="col-md-5 event-img bg-img cover-background"
+                  data-background="img/content/event-05.jpg"
+                ></div>
+                <div class="col-md-7">
+                  <div class="p-1-6 p-sm-1-9">
+                    <span class="badge-soft mb-3">MCT Programming Contest -Fall 2024</span>
+                    <h4 class="font-weight-800 h5 mb-3">
+                      <a href="event-details.html"
+                        >Pixel to Program</a
+                      >
+                    </h4>
+                    <p class="mb-3 alt-font font-weight-500">
+                      Attend the activities and analyze treasured
+                      recommendations from the pinnacle eLearn professionals.
+                    </p>
+                    <div class="dotted-seprator pt-4 mt-4"></div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <p class="mb-0 text-primary font-weight-600">
+                        <i class="ti-calendar me-2"></i
+                        ><span class="text-primary"> 12 Dec. 2024</span>
+                      </p>
+                      <p class="mb-0 text-primary font-weight-600">
+                        <i class="ti-location-pin me-2"></i
+                        ><span class="text-primary">DIU Campus</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 mt-2-9">
+              <div class="row g-0 event-wrapper">
+                <div
+                  class="col-md-5 event-img bg-img cover-background"
+                  data-background="img/content/event-07.jpg"
+                ></div>
+                <div class="col-md-7">
+                  <div class="p-1-6 p-sm-1-9">
+                    <span class="badge-soft secondary mb-3"
+                      >Visions of the Cosmos</span
+                    >
+                    <h4 class="font-weight-800 h5 mb-3">
+                      <a href="event-details.html"
+                        >Astro Art and Photography Competition</a
+                      >
+                    </h4>
+                    <p class="mb-3 alt-font font-weight-500">
+                      Attend the activities and analyze treasured
+                      recommendations from the pinnacle eLearn professionals.
+                    </p>
+                    <div class="dotted-seprator pt-4 mt-4"></div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <p class="mb-0 text-secondary font-weight-600">
+                        <i class="ti-calendar me-2"></i
+                        ><span class="text-secondary"> 02 Dec. 2024</span>
+                      </p>
+                      <p class="mb-0 text-secondary font-weight-600">
+                        <i class="ti-location-pin me-2"></i
+                        ><span class="text-secondary">DIU Campus</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 mt-2-9">
+              <div class="row g-0 event-wrapper">
+                <div
+                  class="col-md-5 event-img bg-img cover-background"
+                  data-background="img/content/event-08.jpg"
+                ></div>
+                <div class="col-md-7">
+                  <div class="p-1-6 p-sm-1-9">
+                    <span class="badge-soft mb-3">Multimedia AI Hackathon</span>
+                    <h4 class="font-weight-800 h5 mb-3">
+                      <a href="event-details.html">Multimedia AI Hackathon</a>
+                    </h4>
+                    <p class="mb-3 alt-font font-weight-500">
+                      Attend the activities and analyze treasured
+                      recommendations from the pinnacle eLearn professionals.
+                    </p>
+                    <div class="dotted-seprator pt-4 mt-4"></div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <p class="mb-0 text-primary font-weight-600">
+                        <i class="ti-calendar me-2"></i
+                        ><span class="text-primary"> 25 May. 2024</span>
+                      </p>
+                      <p class="mb-0 text-primary font-weight-600">
+                        <i class="ti-location-pin me-2"></i
+                        ><span class="text-primary">DIU Campus</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 mt-2-9">
+              <div class="row g-0 event-wrapper">
+                <div
+                  class="col-md-5 event-img bg-img cover-background"
+                  data-background="img/content/event-09.jpg"
+                ></div>
+                <div class="col-md-7">
+                  <div class="p-1-6 p-sm-1-9">
+                    <span class="badge-soft secondary mb-3"
+                      >Sketchbook Thursday</span
+                    >
+                    <h4 class="font-weight-800 h5 mb-3">
+                      <a href="event-details.html"
+                        >Sketchbook Thursday</a
+                      >
+                    </h4>
+                    <p class="mb-3 alt-font font-weight-500">
+                      Attend the activities and analyze treasured
+                      recommendations from the pinnacle eLearn professionals.
+                    </p>
+                    <div class="dotted-seprator pt-4 mt-4"></div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <p class="mb-0 text-secondary font-weight-600">
+                        <i class="ti-calendar me-2"></i
+                        ><span class="text-secondary"> 05 Dec. 2024</span>
+                      </p>
+                      <p class="mb-0 text-secondary font-weight-600">
+                        <i class="ti-location-pin me-2"></i
+                        ><span class="text-secondary">DIU Campus</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BLOG
+        ================================================== -->
+      <section class="position-relative">
+        <div class="container">
+          <div class="section-heading">
+            <span class="sub-title">our news</span>
+            <h2 class="h1 mb-0">Our Latest Blog</h2>
+          </div>
+          <div class="row g-5">
+            <div class="col-lg-6 col-xl-4">
+              <article class="blog-style1 position-relative d-block mb-0">
+                <div class="img-holder position-relative d-block">
+                  <div class="image-hover">
+                    <img src="img/blog/blog-01.jpg" alt="..." />
+                  </div>
+                </div>
+                <div class="text-holder">
+                  <div class="category-box">
+                    <a href="#!">career</a>
+                  </div>
+                  <h3 class="display-25 font-weight-700 mb-3">
+                    <a href="https://blog.daffodilvarsity.edu.bd/round-table-discussion-on-scope-and-prospects-of-multimedia-creative-technology-in-bangladesh/"
+                      >Round Table Discussion on Scope and Prospects of Multimedia & Creative Technology in Bangladesh
+                      </a
+                    >
+                  </h3>
+                  <div>
+                    <p>
+                      Around 50 representatives from 10 renowned multimedia companies of the...
+                    </p>
+                  </div>
+                  <div class="bottom-box">
+                    <div class="btn-box">
+                      <a href="https://blog.daffodilvarsity.edu.bd/round-table-discussion-on-scope-and-prospects-of-multimedia-creative-technology-in-bangladesh/">
+                        <span class="icon-right-arrow-1"></span>Read More
+                      </a>
+                    </div>
+                    <ul class="mb-0 ps-0">
+                      <li><span class="icon-calendar"></span>20 Jun 2019</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-lg-6 col-xl-4 d-none d-lg-block">
+              <div>
+                <div class="image-hover">
+                  <img src="img/blog/blog-07.jpg" alt="..." />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-4">
+              <div class="blog-style1 blog-two-style1 mb-1-9 h-auto">
+                <div class="text-holder">
+                  <div class="category-box">
+                    <a href="#!">Exibition</a>
+                  </div>
+                  <h3 class="display-25 font-weight-700 mb-3">
+                    <a href="https://blog.daffodilvarsity.edu.bd/film-show-and-presentation-on-multimedia-technology/"
+                      >Film Show and presentation on Multimedia Technology</a
+                    >
+                  </h3>
+                  <div class="bottom-box">
+                    <div class="btn-box">
+                      <a href="https://blog.daffodilvarsity.edu.bd/film-show-and-presentation-on-multimedia-technology/">
+                        <span class="icon-right-arrow-1"></span>Read More
+                      </a>
+                    </div>
+                    <div class="meta-info">
+                      <ul class="mb-0 ps-0">
+                        <li><span class="icon-calendar"></span>2 Jan 2012</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="blog-style1 blog-two-style1 h-auto">
+                <div class="text-holder">
+                  <div class="category-box">
+                    <a href="#!">Career</a>
+                  </div>
+                  <h3 class="display-25 font-weight-700 mb-3">
+                    <a href="https://blog.daffodilvarsity.edu.bd/career-prospects-of-b-sc-in-multimedia-technology-and-creative-arts/"
+                      >Career Prospects of B.Sc in Multimedia Technology and Creative Arts</a
+                    >
+                  </h3>
+                  <div class="bottom-box">
+                    <div class="btn-box">
+                      <a href="https://blog.daffodilvarsity.edu.bd/career-prospects-of-b-sc-in-multimedia-technology-and-creative-arts/">
+                        <span class="icon-right-arrow-1"></span>Read More
+                      </a>
+                    </div>
+                    <div class="meta-info">
+                      <ul class="mb-0 ps-0">
+                        <li><span class="icon-calendar"></span>2 Aug 2011</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+        
+       <!-- PARTNER ================================================== -->
+<section class="bg-very-light-gray py-8">
+  <div class="container">
+    <!-- Banner Section -->
+    <div class="banner1 mb-5">
+      <div class="banner1-text text-center">
+        <h1 class="bold-heading1">MoU with Multimedia and Creative Technology</h1>
+        <p class="banner-subtext">
+          Strengthening academic and industrial collaborations with our valued partners.
+        </p>
+      </div>
+    </div>
+
+    <!-- Client Carousel Section -->
+    <div class="client-carousel owl-carousel owl-theme">
+      <div class="text-center">
+        <img src="img/partners/partner-01.jpg" alt="Partner 01" class="partner-logo">
+      </div>
+      <div class="text-center">
+        <img src="img/partners/partner-02.jpg" alt="Partner 02" class="partner-logo">
+      </div>
+      <div class="text-center">
+        <img src="img/partners/partner-03.jpg" alt="Partner 03" class="partner-logo">
+      </div>
+      <div class="text-center">
+        <img src="img/partners/partner-04.jpg" alt="Partner 04" class="partner-logo">
+      </div>
+      <div class="text-center">
+        <img src="img/partners/partner-05.jpg" alt="Partner 05" class="partner-logo">
+      </div>
+      <div class="text-center">
+        <img src="img/partners/partner-06.jpg" alt="Partner 06" class="partner-logo">
+      </div>
+      <div class="text-center">
+        <img src="img/partners/partner-07.jpg" alt="Partner 07" class="partner-logo">
+      </div>
+      <div class="text-center">
+        <img src="img/partners/partner-08.jpg" alt="Partner 08" class="partner-logo">
+      </div>
+      <div class="text-center">
+        <img src="img/partners/partner-09.jpg" alt="Partner 09" class="partner-logo">
+      </div>
+      <div class="text-center">
+        <img src="img/partners/partner-10.jpg" alt="Partner 10" class="partner-logo">
+      </div>
+    </div>
+  </div>
+</section>
+
+        
+      <!-- apply banner
+        ================================================== -->
+      <div style="margin-bottom: 0px;" class="banner">
+        <div class="banner-text">
+          <h1 class="bold-heading">Maximum 75% waiver is available!</h1>
+          <p>Apply Now to Enroll in Our MCT Programs.</p>
+          <a href="https://admission.daffodilvarsity.edu.bd/" class="join-button">Apply Now</a>
+        </div>
+      </div>
+      <!-- FOOTER
+        ================================================== -->
+
+
+      <footer class="ftco-footer ftco-bg-dark ftco-section">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-md-6 col-lg-3">
+              <div class="ftco-footer-widget mb-5">
+                <h2 class="ftco-heading-2">Have a Questions?</h2>
+                <div class="block-23 mb-3">
+                  <ul>
+                    <li>
+                      <span class="icon icon-map-marker"
+                        ><i class="fa-solid fa-address-book"></i></span
+                      ><span class="text"
+                        >Daffodil International University,Daffodil Smart City
+                        (DSC), Birulia, Savar, Dhaka-1216</span
+                      >
+                    </li>
+                    <li>
+                      <a href="#"
+                        ><span class="icon icon-phone"
+                          ><i class="fa-solid fa-phone"></i></span
+                        ><span class="text">+880 1847334970</span></a
+                      >
+                    </li>
+                    <li>
+                      <a href="#"
+                        ><span class="icon icon-envelope"
+                          ><i class="fa-solid fa-envelope"></i></span
+                        ><span class="text"
+                          >mctoffice@daffodilvarsity.edu.bd</span
+                        ></a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="ftco-footer-widget mb-5">
+                <h2 class="ftco-heading-2">Recent Blog</h2>
+                <div class="block-21 mb-4 d-flex">
+                  <a
+                    class="blog-img mr-4"
+                    style="background-image: url(images/blog-03.jpg)"
+                  ></a>
+                  <div class="text">
+                    <h3 class="heading">
+                      <a style="font-weight: normal;" href="#"
+                        >Round Table Discussion on Scope and Prospects of Multimedia & Creative Technology in Bangladesh</a
+                      >
+                    </h3>
+                    <div class="meta">
+                      <div>
+                        <a href="#"
+                          ><span class="icon-calendar"><i class="fa-regular fa-calendar-days"></i></span> 20 Jun. 2019</a
+                        >
+                      </div>
+                      <div>
+                        <a href="https://blog.daffodilvarsity.edu.bd/"><span class="icon-person"><i class="fa-solid fa-person"></i></span> Sultan Mahmud Sujon</a>
+                      </div>
+                      <div>
+                        <a href="#"><span class="icon-chat"><i class="fa-brands fa-rocketchat"></i></span> 19</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="block-21 mb-5 d-flex">
+                  <a
+                    class="blog-img mr-4"
+                    style="background-image: url(images/blog-04.jpg)"
+                  ></a>
+                  <div class="text">
+                    <h3 class="heading">
+                      <a style="font-weight: normal;" href="#"
+                        >Film Show and presentation on Multimedia Technology</a
+                      >
+                    </h3>
+                    <div class="meta">
+                      <div>
+                        <a href="#"
+                          ><span class="icon-calendar"><i class="fa-regular fa-calendar-days"></i></span> 12 Jan. 2012</a
+                        >
+                      </div>
+                      <div>
+                        <a href="https://blog.daffodilvarsity.edu.bd/"><span class="icon-person"><i class="fa-solid fa-person"></i></span> Sultan Mahmud Sujon</a>
+                      </div>
+                      <div>
+                        <a href="#"><span class="icon-chat"><i class="fa-brands fa-rocketchat"></i></span> 19</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="ftco-footer-widget mb-5 ml-md-4">
+                <h2 class="ftco-heading-2">Links</h2>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="https://daffodilvarsity.edu.bd/department/mct"
+                      ><span class="ion-ios-arrow-round-forward mr-2"
+                        ><i class="fa-sharp fa-solid fa-arrow-right"></i
+                      ></span>
+                      Home</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://daffodilvarsity.edu.bd/department/mct#"
+                      ><span class="ion-ios-arrow-round-forward mr-2"
+                        ><i class="fa-sharp fa-solid fa-arrow-right"></i
+                      ></span>
+                      About</a
+                    >
+                  </li>
+                  
+                  <li>
+                    <a href="https://daffodilvarsity.edu.bd/department/mct/notice#"
+                      ><span class="ion-ios-arrow-round-forward mr-2"
+                        ><i class="fa-sharp fa-solid fa-arrow-right"></i
+                      ></span>
+                      Faculty Members</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://daffodilvarsity.edu.bd/department/mct/notice#"
+                      ><span class="ion-ios-arrow-round-forward mr-2"
+                        ><i class="fa-sharp fa-solid fa-arrow-right"></i
+                      ></span>
+                     Notices</a
+                    >
+                  </li>
+                  
+                  <li>
+                    <a href="https://daffodilvarsity.edu.bd/department/mct/contact-us"
+                      ><span class="ion-ios-arrow-round-forward mr-2"
+                        ><i class="fa-sharp fa-solid fa-arrow-right"></i
+                      ></span>
+                      Contact</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="ftco-footer-widget mb-5">
+                <h2 class="ftco-heading-2">Subscribe Us!</h2>
+                <form action="#" class="subscribe-form">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control mb-2 text-center"
+                      placeholder="Enter email address"
+                    />
+                    <input
+                      type="submit"
+                      value="Subscribe"
+                      class="form-control submit px-3"
+                    />
+                  </div>
+                </form>
+              </div>
+              <div class="ftco-footer-widget mb-5">
+                <h2 class="ftco-heading-2 mb-0">Connect With Us</h2>
+                <ul
+                  class="ftco-footer-social list-unstyled float-md-left float-lft mt-3"
+                >
+                  <li class="ftco-animate">
+                    <a href="https://x.com/daffodilvarsity"><span class="icon-twitter"><i class="fa-brands fa-x-twitter"></i></span></a>
+                  </li>
+                  <li class="ftco-animate">
+                    <a href="https://www.facebook.com/mct.daffodilvarsity.edu.bd"><span class="icon-facebook"><i class="fa-brands fa-facebook"></i></span></a>
+                  </li>
+                  <li class="ftco-animate">
+                    <a href="https://www.instagram.com/daffodil.university/"><span class="icon-instagram"><i class="fa-brands fa-instagram"></i></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: -20px;margin-bottom: -80px;" class="row">
+
+            <div class="col-md-12 text-center">
+              <p>
+                Copyright &copy;
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                All rights reserved | Deparment of Multimedia and Creative
+                Technology
+                <i class="fa-sharp-duotone fa-solid fa-heart"></i> Developed by
+                <a href="https://maps.app.goo.gl/L7Rx4G5Q1zjFYjc18" target="_blank"
+                  >Dewan Sahariar Hossain Mahi</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- start scroll to top -->
+    <a href="#!" class="scroll-to-top"
+      ><i class="fas fa-angle-up" aria-hidden="true"></i
+    ></a>
+    <!-- end scroll to top -->
+
+    
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- popper js -->
+    <script src="js/popper.min.js"></script>
+
+    <!-- bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- core.min.js -->
+    <script src="js/core.min.js"></script>
+
+    <!-- search -->
+    <script src="search/search.js"></script>
+
+    <!-- custom scripts -->
+    <script src="js/main.js"></script>
+
+    <!-- form plugins js -->
+    <script src="quform/js/plugins.js"></script>
+
+    <!-- form scripts js -->
+    <script src="quform/js/scripts.js"></script>
+
+    <!-- all js include end -->
+    
+    <!-- Add Botpress scripts before the closing body tag -->
+    <!-- Botpress Chatbot Script -->
+    <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+    <script>
+      // Wait for DOM to be fully loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add error handling for script loading
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+          console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+          return false;
+        };
+
+        // Add loading state tracking
+        let botpressLoaded = false;
+        let botpressError = null;
+
+        // Make sure window.botpress exists
+        if (typeof window.botpress === 'undefined') {
+          console.error('Botpress not loaded properly');
+          return;
+        }
+
+        window.botpress.on("webchat:ready", () => {
+          console.log("Botpress webchat is ready");
+          botpressLoaded = true;
+          window.botpress.open();
+        });
+
+        window.botpress.on("webchat:error", (error) => {
+          console.error("Botpress webchat error:", error);
+          botpressError = error;
+        });
+
+        try {
+          window.botpress.init({
+            "botId": "fde9b72e-d93f-47fa-8c95-70f126efc37c",
+            "hostUrl": "https://cdn.botpress.cloud/webchat/v2.3",
+            "messagingUrl": "https://messaging.botpress.cloud",
+            "configuration": {
+              "composerPlaceholder": "Got a question? Let's get creative!",
+              "botName": "MCT Genie",
+              "botAvatar": "https://files.bpcontent.cloud/2025/04/12/05/20250412055537-JMPTCDCG.jpeg",
+              "botDescription": "I'm your creative sidekick—ready to help with all things of Multimedia and Creative Technology Department!",
+              "website": {
+                "title": "https://daffodilvarsity.edu.bd/department/mct",
+                "link": "https://daffodilvarsity.edu.bd/department/mct"
+              },
+              "email": {
+                "title": "mctoffice@daffodilvarsity.edu.bd",
+                "link": "mctoffice@daffodilvarsity.edu.bd"
+              },
+              "phone": {
+                "title": "",
+                "link": ""
+              },
+              "termsOfService": {},
+              "privacyPolicy": {},
+              "color": "#3B82F6",
+              "variant": "solid",
+              "themeMode": "light",
+              "fontFamily": "rubik",
+              "radius": 4,
+              "additionalStylesheetUrl": "https://files.bpcontent.cloud/2025/04/12/05/20250412055843-TPEH8M99.css",
+              "allowFileUpload": true,
+              "enableTranscriptDownload": true,
+              "showConversationId": false,
+              "enablePersistHistory": true,
+              "closeOnEscape": true,
+              "showCloseButton": true,
+              "containerWidth": "500px",
+              "layoutWidth": "100%",
+              "hideWidget": false,
+              "disableAnimations": false,
+              "enableReset": true
+            },
+            "clientId": "78e3731e-4f3e-4087-b9f2-6d3e01d3cf6a",
+            "stylesheet": "https://files.bpcontent.cloud/2025/04/12/05/20250412055843-TPEH8M99.css",
+            "selector": "#webchat"
+          });
+          console.log("Botpress initialization started");
+        } catch (error) {
+          console.error("Error initializing Botpress:", error);
+          botpressError = error;
+        }
+      });
+
+      // Toggle chatbot visibility with error handling
+      function toggleChatbot() {
+        try {
+          const webchat = document.getElementById('webchat');
+          const backdrop = document.getElementById('chatbotBackdrop');
+          const minimizedButton = document.getElementById('minimizedButton');
+          const loader = document.getElementById('chatbotLoader');
+          const particleContainer = document.getElementById('particle-container');
+          
+          if (!webchat || !backdrop || !minimizedButton || !loader || !particleContainer) {
+            console.error("Required chatbot elements not found");
+            return;
+          }
+          
+          if (webchat.classList.contains('active')) {
+            // Minimize the chatbot
+            webchat.classList.remove('active');
+            webchat.classList.add('minimized');
+            backdrop.classList.remove('active');
+            particleContainer.classList.remove('active');
+            minimizedButton.style.display = 'flex';
+            loader.style.display = 'none';
+          } else {
+            // Open the chatbot
+            webchat.classList.remove('minimized');
+            webchat.classList.add('active');
+            backdrop.classList.add('active');
+            particleContainer.classList.add('active');
+            minimizedButton.style.display = 'none';
+            loader.style.display = 'block';
+
+            // Ensure Botpress is properly loaded
+            if (!window.botpress) {
+              console.error("Botpress not initialized");
+              return;
+            }
+            window.botpress.open();
+          }
+        } catch (error) {
+          console.error("Error toggling chatbot:", error);
+        }
+      }
+
+      // Handle backdrop click
+      document.getElementById('chatbotBackdrop').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+          toggleChatbot();
+        }
+      });
+
+      // Handle minimized button click
+      document.getElementById('minimizedButton').addEventListener('click', () => {
+        toggleChatbot();
+      });
+    </script>
+
+    <!-- Add Three.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Particle Animation Styles -->
+    <style>
+      #particle-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 998;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      #particle-container.active {
+        opacity: 1;
+      }
+    </style>
+
+    <!-- Particle Animation Script -->
+    <script>
+      window.addEventListener('load', () => {
+        // Create particle container
+        const particleContainer = document.createElement('div');
+        particleContainer.id = 'particle-container';
+        document.body.appendChild(particleContainer);
+
+        // Initialize Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        particleContainer.appendChild(renderer.domElement);
+
+        // Create particles with more dynamic properties
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 3000; // Increased particle count
+        const posArray = new Float32Array(particlesCount * 3);
+        const colors = [
+          new THREE.Color('#00F5FF'),
+          new THREE.Color('#00B4FF'),
+          new THREE.Color('#00FFE5'),
+          new THREE.Color('#00FF9D')
+        ];
+
+        // Create a more interesting particle distribution
+        for(let i = 0; i < particlesCount * 3; i += 3) {
+          // Create a spherical distribution
+          const radius = Math.random() * 2;
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.random() * Math.PI;
+          
+          posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
+          posArray[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
+          posArray[i + 2] = radius * Math.cos(phi);
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        // Create particle materials with varying sizes and colors
+        const particlesMaterials = colors.map(color => 
+          new THREE.PointsMaterial({
+            size: 0.02 + Math.random() * 0.03,
+            color: color,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true
+          })
+        );
+
+        // Create multiple particle systems
+        const particlesMeshes = particlesMaterials.map(material => {
+          const mesh = new THREE.Points(particlesGeometry, material);
+          scene.add(mesh);
+          return mesh;
+        });
+
+        camera.position.z = 3;
+
+        // Enhanced animation
+        function animate() {
+          requestAnimationFrame(animate);
+          
+          // Rotate particles at different speeds
+          particlesMeshes.forEach((mesh, index) => {
+            mesh.rotation.x += 0.0002 * (index + 1);
+            mesh.rotation.y += 0.0003 * (index + 1);
+            
+            // Add subtle pulsing effect
+            const scale = 1 + Math.sin(Date.now() * 0.001 + index) * 0.1;
+            mesh.scale.set(scale, scale, scale);
+          });
+
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Update toggleChatbot function to handle particle animation
+        const originalToggleChatbot = window.toggleChatbot;
+        window.toggleChatbot = function() {
+          const webchat = document.getElementById('webchat');
+          const backdrop = document.getElementById('chatbotBackdrop');
+          const minimizedButton = document.getElementById('minimizedButton');
+          const loader = document.getElementById('chatbotLoader');
+          const particleContainer = document.getElementById('particle-container');
+          
+          if (webchat.classList.contains('active')) {
+            // Minimize the chatbot
+            webchat.classList.remove('active');
+            webchat.classList.add('minimized');
+            backdrop.classList.remove('active');
+            particleContainer.classList.remove('active');
+            minimizedButton.style.display = 'flex';
+            loader.style.display = 'none';
+          } else {
+            // Open the chatbot
+            webchat.classList.remove('minimized');
+            webchat.classList.add('active');
+            backdrop.classList.add('active');
+            particleContainer.classList.add('active');
+            minimizedButton.style.display = 'none';
+            loader.style.display = 'block';
+
+            // Ensure Botpress is properly loaded
+            if (!window.botpress) {
+              console.error("Botpress not initialized");
+              return;
+            }
+            window.botpress.open();
+          }
+        };
+      });
+    </script>
+
+    <!-- Add this script right before the closing body tag -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Message icon messages
+        const iconMessages = [
+          "Hi there! 👋",
+          "Wanna talk? 💬",
+          "I'm your Genie! ✨",
+          "I'm here to assist you! 🤖"
+        ];
+        const messageIcon = document.querySelector('.chatbot-minimized-button');
+        let currentIconMessage = 0;
+
+        function updateIconMessage() {
+          messageIcon.setAttribute('data-message', iconMessages[currentIconMessage]);
+          currentIconMessage = (currentIconMessage + 1) % iconMessages.length;
+        }
+
+        // Update message icon message every 4 seconds
+        updateIconMessage();
+        setInterval(updateIconMessage, 4000);
+
+        // Ask AI button messages
+        const askAIMessages = [
+          "Need help? 🤔",
+          "Ask me anything! 💡",
+          "I'm here to help! 🎓",
+          "Let's chat! 💬"
+        ];
+        
+        // Find all Ask AI buttons (there might be multiple in the banner)
+        const askAIButtons = document.querySelectorAll('.butn[onclick="toggleChatbot()"]');
+        let currentAskAIMessage = 0;
+
+        function updateAskAIMessage() {
+          askAIButtons.forEach(button => {
+            button.setAttribute('data-message', askAIMessages[currentAskAIMessage]);
+          });
+          currentAskAIMessage = (currentAskAIMessage + 1) % askAIMessages.length;
+        }
+
+        // Update Ask AI button message every 4 seconds
+        updateAskAIMessage();
+        setInterval(updateAskAIMessage, 4000);
+      });
+    </script>
+  </body>
+</html>
