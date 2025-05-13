@@ -718,6 +718,13 @@
             particleContainer.classList.add('active');
             minimizedButton.style.display = 'none';
             loader.style.display = 'block';
+
+            // Ensure Botpress is properly loaded
+            if (!window.botpress) {
+              console.error("Botpress not initialized");
+              return;
+            }
+            window.botpress.open();
           }
         };
       });
@@ -2920,5 +2927,90 @@
     <!-- ElevenLabs Conversation AI Widget -->
     <elevenlabs-convai agent-id="Sh5TJFPNiLAghpbkscVT"></elevenlabs-convai>
     <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+
+    <!-- ElevenLabs Pop-up Messages -->
+    <style>
+      .elevenlabs-popup {
+        position: fixed;
+        bottom: 110px;
+        right: 32px;
+        background: linear-gradient(45deg, #00F5FF, #00B4FF, #00FFE5, #00FF9D, #00F5FF);
+        background-size: 400% 400%;
+        animation: gradientBorder 3s ease-in-out infinite;
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 24px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        z-index: 9999;
+        opacity: 1;
+        transform: none;
+        cursor: pointer;
+        font-weight: 800;
+        font-size: 0.92rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        pointer-events: auto;
+        transition: none;
+        min-height: 28px;
+      }
+      @keyframes gradientBorder {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .elevenlabs-popup.show {
+        opacity: 1;
+        transform: none;
+      }
+      /* Remove hover effect */
+      .elevenlabs-popup:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        transform: none;
+      }
+      @media (max-width: 600px) {
+        .elevenlabs-popup {
+          right: 8px;
+          left: auto;
+          bottom: 80px;
+          max-width: 90vw;
+          font-size: 0.85rem;
+        }
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        function showPopupWhenLoaderGone() {
+          const loader = document.querySelector('.loader-container');
+          if (!loader || getComputedStyle(loader).display === 'none' || loader.style.opacity === '0' || loader.style.visibility === 'hidden') {
+            let popup = document.querySelector('.elevenlabs-popup');
+            if (!popup) {
+              popup = document.createElement('div');
+              popup.className = 'elevenlabs-popup show';
+              document.body.appendChild(popup);
+            }
+            popup.textContent = 'TIRED OF TYPING?';
+            popup.addEventListener('click', function() {
+              const convaiElement = document.querySelector('elevenlabs-convai');
+              if (convaiElement) {
+                convaiElement.click();
+              }
+            });
+          } else {
+            setTimeout(showPopupWhenLoaderGone, 300);
+          }
+        }
+        showPopupWhenLoaderGone();
+      });
+    </script>
   </body>
 </html>
