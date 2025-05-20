@@ -744,6 +744,59 @@
 
     <link rel="stylesheet" href="css/bounce-loader.css">
     <script src="js/loader.js" defer></script>
+
+    <!-- Add this style section in the head -->
+    <style>
+      /* Remove the old virtual-assistant-btn styles */
+      .virtual-assistant-btn {
+        display: none;
+      }
+
+      /* Add new styles for the virtual assistant button */
+      .butn.md[href*="convai.com"] {
+        background: linear-gradient(45deg, #00F5FF, #00B4FF, #00FFE5, #00FF9D);
+        background-size: 300% 300%;
+        animation: gradientAnimation 3s ease infinite;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        color: #ffffff;
+      }
+
+      .butn.md[href*="convai.com"]:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        animation: gradientAnimation 1.5s ease infinite;
+        color: #ffffff;
+      }
+
+      .butn.md[href*="convai.com"] .icon-arrow {
+        color: #ffffff;
+      }
+
+      .butn.md[href*="convai.com"]:hover .icon-arrow {
+        color: #ffffff;
+      }
+
+      .butn.md[href*="convai.com"] .label {
+        color: #ffffff;
+      }
+
+      .butn.md[href*="convai.com"]:hover .label {
+        color: #ffffff;
+      }
+
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -779,9 +832,7 @@
                       <div  class="navbar-toggler bg-primary"></div>
         
                       <!-- Start Attribute Navigation -->
-                      <div
-                      style="margin-right:  -80px ;" class="attr-nav align-items-xl-center ms-xl-auto main-font d-flex"
-                      >
+                      <div style="margin-right: -80px;" class="attr-nav align-items-xl-center ms-xl-auto main-font d-flex">
                         <ul class="d-flex align-items-center mb-0">
                           <!-- Email Option -->
                           <li class="nav-item me-4">
@@ -798,10 +849,18 @@
                             </a>
                           </li>
                           <!-- Apply Now Button -->
-                          <li  class="d-none d-xl-inline-block">
+                          <li class="d-none d-xl-inline-block me-3">
                             <a href="https://admission.daffodilvarsity.edu.bd/" class="butn md text-white">
                               <i class="fa-solid fa-arrow-right icon-arrow before"></i>
-                              <span  class="label">Apply Now</span>
+                              <span class="label">Apply Now</span>
+                              <i class="fa-solid fa-arrow-left icon-arrow after"></i>
+                            </a>
+                          </li>
+                          <!-- Virtual Assistant Button -->
+                          <li class="d-none d-xl-inline-block">
+                            <a href="https://x.convai.com/?xpid=564f07f8-1283-4da1-8398-59087f06cc84&type=public" class="butn md" target="_blank">
+                              <i class="fa-solid fa-arrow-right icon-arrow before"></i>
+                              <span class="label">Virtual Assistant</span>
                               <i class="fa-solid fa-arrow-left icon-arrow after"></i>
                             </a>
                           </li>
