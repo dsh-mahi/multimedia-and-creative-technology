@@ -692,41 +692,6 @@
           camera.updateProjectionMatrix();
           renderer.setSize(window.innerWidth, window.innerHeight);
         });
-
-        // Update toggleChatbot function to handle particle animation
-        const originalToggleChatbot = window.toggleChatbot;
-        window.toggleChatbot = function() {
-          const webchat = document.getElementById('webchat');
-          const backdrop = document.getElementById('chatbotBackdrop');
-          const minimizedButton = document.getElementById('minimizedButton');
-          const loader = document.getElementById('chatbotLoader');
-          const particleContainer = document.getElementById('particle-container');
-          
-          if (webchat.classList.contains('active')) {
-            // Minimize the chatbot
-            webchat.classList.remove('active');
-            webchat.classList.add('minimized');
-            backdrop.classList.remove('active');
-            particleContainer.classList.remove('active');
-            minimizedButton.style.display = 'flex';
-            loader.style.display = 'none';
-          } else {
-            // Open the chatbot
-            webchat.classList.remove('minimized');
-            webchat.classList.add('active');
-            backdrop.classList.add('active');
-            particleContainer.classList.add('active');
-            minimizedButton.style.display = 'none';
-            loader.style.display = 'block';
-
-            // Ensure Botpress is properly loaded
-            if (!window.botpress) {
-              console.error("Botpress not initialized");
-              return;
-            }
-            window.botpress.open();
-          }
-        };
       });
     </script>
 
@@ -2592,7 +2557,25 @@
     
     <!-- Add Botpress scripts before the closing body tag -->
     <!-- Botpress Chatbot Script -->
-    <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+    <style>
+      #webchat .bpWebchat {
+        position: unset;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        max-width: 100%;
+      }
+
+      #webchat .bpFab {
+        display: none;
+      }
+    </style>
+
+    <!-- Put this on your page BEFORE the script below -->
+    <div id="webchat" style="width: 500px; height: 500px;"></div>
+
+    <!-- In your <body> tag -->
     <script>
       // Wait for DOM to be fully loaded
       document.addEventListener('DOMContentLoaded', function() {
@@ -2602,37 +2585,23 @@
           return false;
         };
 
-        // Add loading state tracking
-        let botpressLoaded = false;
-        let botpressError = null;
-
-        // Make sure window.botpress exists
-        if (typeof window.botpress === 'undefined') {
-          console.error('Botpress not loaded properly');
-          return;
-        }
-
         window.botpress.on("webchat:ready", () => {
           console.log("Botpress webchat is ready");
-          botpressLoaded = true;
           window.botpress.open();
         });
 
         window.botpress.on("webchat:error", (error) => {
           console.error("Botpress webchat error:", error);
-          botpressError = error;
         });
 
         try {
           window.botpress.init({
-            "botId": "fde9b72e-d93f-47fa-8c95-70f126efc37c",
-            "hostUrl": "https://cdn.botpress.cloud/webchat/v2.3",
-            "messagingUrl": "https://messaging.botpress.cloud",
+            "botId": "2e27e8c0-dcc6-4605-9e38-035f65cabf59",
             "configuration": {
               "composerPlaceholder": "Got a question? Let's get creative!",
               "botName": "MCT Genie",
-              "botAvatar": "https://files.bpcontent.cloud/2025/04/12/05/20250412055537-JMPTCDCG.jpeg",
-              "botDescription": "I'm your creative sidekick—ready to help with all things of Multimedia and Creative Technology Department!",
+              "botAvatar": "https://files.bpcontent.cloud/2025/05/20/16/20250520161506-22LDFGPY.jpeg",
+              "botDescription": "I'm your creative sidekick—ready to help with all things of the Multimedia and Creative Technology Department!",
               "website": {
                 "title": "https://daffodilvarsity.edu.bd/department/mct",
                 "link": "https://daffodilvarsity.edu.bd/department/mct"
@@ -2641,10 +2610,7 @@
                 "title": "mctoffice@daffodilvarsity.edu.bd",
                 "link": "mctoffice@daffodilvarsity.edu.bd"
               },
-              "phone": {
-                "title": "",
-                "link": ""
-              },
+              "phone": {},
               "termsOfService": {},
               "privacyPolicy": {},
               "color": "#3B82F6",
@@ -2652,27 +2618,15 @@
               "themeMode": "light",
               "fontFamily": "rubik",
               "radius": 4,
-              "additionalStylesheetUrl": "https://files.bpcontent.cloud/2025/04/12/05/20250412055843-TPEH8M99.css",
-              "allowFileUpload": true,
-              "enableTranscriptDownload": true,
-              "showConversationId": false,
-              "enablePersistHistory": true,
-              "closeOnEscape": true,
-              "showCloseButton": true,
-              "containerWidth": "500px",
-              "layoutWidth": "100%",
-              "hideWidget": false,
-              "disableAnimations": false,
-              "enableReset": true
+              "additionalStylesheetUrl": "https://files.bpcontent.cloud/2025/05/20/16/20250520162458-3RGI3R2A.css",
+              "allowFileUpload": true
             },
-            "clientId": "78e3731e-4f3e-4087-b9f2-6d3e01d3cf6a",
-            "stylesheet": "https://files.bpcontent.cloud/2025/04/12/05/20250412055843-TPEH8M99.css",
+            "clientId": "f4c30ea8-076b-4913-96c1-eac38d51f1b4",
             "selector": "#webchat"
           });
           console.log("Botpress initialization started");
         } catch (error) {
           console.error("Error initializing Botpress:", error);
-          botpressError = error;
         }
       });
 
@@ -2839,41 +2793,6 @@
           camera.updateProjectionMatrix();
           renderer.setSize(window.innerWidth, window.innerHeight);
         });
-
-        // Update toggleChatbot function to handle particle animation
-        const originalToggleChatbot = window.toggleChatbot;
-        window.toggleChatbot = function() {
-          const webchat = document.getElementById('webchat');
-          const backdrop = document.getElementById('chatbotBackdrop');
-          const minimizedButton = document.getElementById('minimizedButton');
-          const loader = document.getElementById('chatbotLoader');
-          const particleContainer = document.getElementById('particle-container');
-          
-          if (webchat.classList.contains('active')) {
-            // Minimize the chatbot
-            webchat.classList.remove('active');
-            webchat.classList.add('minimized');
-            backdrop.classList.remove('active');
-            particleContainer.classList.remove('active');
-            minimizedButton.style.display = 'flex';
-            loader.style.display = 'none';
-          } else {
-            // Open the chatbot
-            webchat.classList.remove('minimized');
-            webchat.classList.add('active');
-            backdrop.classList.add('active');
-            particleContainer.classList.add('active');
-            minimizedButton.style.display = 'none';
-            loader.style.display = 'block';
-
-            // Ensure Botpress is properly loaded
-            if (!window.botpress) {
-              console.error("Botpress not initialized");
-              return;
-            }
-            window.botpress.open();
-          }
-        };
       });
     </script>
 
