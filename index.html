@@ -3001,5 +3001,52 @@
         data-agent-id="agt_wy9CSUxC"
         data-monitor="true">
     </script>
+
+    <!-- Function to inject D-ID agent script -->
+    <script>
+      function injectDIDAgent() {
+        if (document.getElementById('did-agent-script')) return; // Prevent double-injection
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.id = 'did-agent-script';
+        script.src = 'https://agent.d-id.com/v1/index.js';
+        script.setAttribute('data-name', 'did-agent');
+        script.setAttribute('data-mode', 'fabio');
+        script.setAttribute('data-client-key', 'Z29vZ2xlLW9hdXRoMnwxMDA4MDcxMDE5NDQ5ODk2MTM4NjA6aFNoeTBZQktKVnRERHJSQ0dKNG1p');
+        script.setAttribute('data-agent-id', 'agt_wy9CSUxC');
+        script.setAttribute('data-monitor', 'true');
+        document.body.appendChild(script);
+      }
+
+      // Wait for loader/intro to disappear, then inject D-ID agent
+      function showDIDAfterIntro() {
+        const loader = document.querySelector('.loader-container');
+        if (!loader || loader.style.display === 'none' || loader.style.opacity === '0' || loader.style.visibility === 'hidden') {
+          injectDIDAgent();
+        } else {
+          setTimeout(showDIDAfterIntro, 300);
+        }
+      }
+      showDIDAfterIntro();
+
+      // Reposition D-ID widget after it loads
+      function repositionDIDWidget() {
+        // Try to find the D-ID widget container
+        const didWidget = document.querySelector('did-agent, .did-agent, [data-name="did-agent"], iframe[src*="d-id.com"]');
+        const convaiWidget = document.querySelector('elevenlabs-convai');
+        if (didWidget && convaiWidget) {
+          // Get position of Conversational AI widget
+          // Place D-ID widget to the left of Conversational AI
+          didWidget.style.position = 'fixed';
+          didWidget.style.bottom = '32px';
+          didWidget.style.right = '120px'; // Adjust as needed
+          didWidget.style.zIndex = '99999';
+        } else {
+          setTimeout(repositionDIDWidget, 500);
+        }
+      }
+      // Wait a bit after injection to reposition
+      setTimeout(repositionDIDWidget, 3000);
+    </script>
   </body>
 </html>
