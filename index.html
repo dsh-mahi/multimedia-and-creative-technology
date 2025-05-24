@@ -797,6 +797,92 @@
         }
       }
     </style>
+
+    <style>
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .butn.md[href*="mct-virtual-tour"] {
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      padding: 12px 12px !important;
+      min-width: 45px !important;
+      text-align: center !important;
+    }
+
+    .butn.md[href*="mct-virtual-tour"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      animation: gradientAnimation 1.5s ease infinite;
+    }
+
+    .butn.md[href*="mct-virtual-tour"]:active .label,
+    .butn.md[href*="mct-virtual-tour"]:focus .label {
+      transform: none !important;
+    }
+
+    .butn.md[href*="mct-virtual-tour"] .label {
+      color: #ffffff;
+      transition: none;
+    }
+
+    .butn.md[href*="mct-virtual-tour"]:hover .label {
+      color: #ffffff;
+      transform: none;
+    }
+    </style>
+
+    <style>
+      .butn.md.mct-gradient-button {
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        padding: 12px 12px !important;
+        min-width: 45px !important;
+        text-align: center !important;
+        background: linear-gradient(45deg, #00F5FF, #00B4FF, #00FFE5, #00FF9D);
+        background-size: 300% 300%;
+        animation: gradientAnimation 3s ease infinite;
+      }
+
+      .butn.md.mct-gradient-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        animation: gradientAnimation 1.5s ease infinite;
+      }
+
+      .butn.md.mct-gradient-button:active .label,
+      .butn.md.mct-gradient-button:focus .label {
+        transform: none !important;
+      }
+
+      .butn.md.mct-gradient-button .label {
+        color: #ffffff;
+        transition: none;
+        font-size: 14px;
+      }
+
+      .butn.md.mct-gradient-button:hover .label {
+        color: #ffffff;
+        transform: none;
+      }
+    </style>
   </head>
 
   <body>
@@ -857,11 +943,15 @@
                             </a>
                           </li>
                           <!-- Virtual Assistant Button -->
+                          <li class="d-none d-xl-inline-block me-3">
+                            <a href="https://dsh-mahi.github.io/mct-virtual-tour/" class="butn md mct-gradient-button" target="_blank">
+                              <span class="label">VR Tour</span>
+                            </a>
+                          </li>
+                          <!-- AR Button -->
                           <li class="d-none d-xl-inline-block">
-                            <a href="https://x.convai.com/?xpid=564f07f8-1283-4da1-8398-59087f06cc84&type=public" class="butn md" target="_blank">
-                              <i class="fa-solid fa-arrow-right icon-arrow before"></i>
-                              <span class="label">Virtual Assistant</span>
-                              <i class="fa-solid fa-arrow-left icon-arrow after"></i>
+                            <a href="https://postimg.cc/gx6rnnXr" class="butn md mct-gradient-button" target="_blank">
+                              <span class="label">AR</span>
                             </a>
                           </li>
                         </ul>
