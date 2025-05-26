@@ -811,7 +811,23 @@
       }
     }
 
-    .butn.md[href*="mct-virtual-tour"] {
+    @keyframes glowPulse {
+      0% {
+        opacity: 0.5;
+        filter: blur(8px);
+      }
+      50% {
+        opacity: 0.8;
+        filter: blur(12px);
+      }
+      100% {
+        opacity: 0.5;
+        filter: blur(8px);
+      }
+    }
+
+    .butn.md[href*="mct-virtual-tour"],
+    .butn.md[href*="postimg.cc"] {
       position: relative;
       z-index: 1;
       transition: all 0.3s ease;
@@ -821,25 +837,56 @@
       padding: 12px 12px !important;
       min-width: 45px !important;
       text-align: center !important;
+      background: linear-gradient(45deg, #00F5FF, #00B4FF, #00FFE5, #00FF9D);
+      background-size: 300% 300%;
+      animation: gradientAnimation 3s ease infinite;
     }
 
-    .butn.md[href*="mct-virtual-tour"]:hover {
+    .butn.md[href*="mct-virtual-tour"]:hover,
+    .butn.md[href*="postimg.cc"]:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
       animation: gradientAnimation 1.5s ease infinite;
     }
 
+    .butn.md[href*="mct-virtual-tour"]::before,
+    .butn.md[href*="postimg.cc"]::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #00F5FF, #00B4FF, #00FFE5, #00FF9D);
+      background-size: 400% 400%;
+      z-index: -1;
+      border-radius: 6px;
+      animation: gradientAnimation 3s ease infinite, glowPulse 2s ease-in-out infinite;
+      filter: blur(8px);
+      opacity: 0.5;
+    }
+
+    .butn.md[href*="mct-virtual-tour"]:hover::before,
+    .butn.md[href*="postimg.cc"]:hover::before {
+      opacity: 0.8;
+      filter: blur(12px);
+    }
+
     .butn.md[href*="mct-virtual-tour"]:active .label,
-    .butn.md[href*="mct-virtual-tour"]:focus .label {
+    .butn.md[href*="postimg.cc"]:active .label,
+    .butn.md[href*="mct-virtual-tour"]:focus .label,
+    .butn.md[href*="postimg.cc"]:focus .label {
       transform: none !important;
     }
 
-    .butn.md[href*="mct-virtual-tour"] .label {
+    .butn.md[href*="mct-virtual-tour"] .label,
+    .butn.md[href*="postimg.cc"] .label {
       color: #ffffff;
       transition: none;
     }
 
-    .butn.md[href*="mct-virtual-tour"]:hover .label {
+    .butn.md[href*="mct-virtual-tour"]:hover .label,
+    .butn.md[href*="postimg.cc"]:hover .label {
       color: #ffffff;
       transform: none;
     }
